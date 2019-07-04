@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Jit-uG-XaE">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,16 +13,89 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MovieNight" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="2S1-22-5Iq">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <viewLayoutGuide key="safeArea" id="yKw-kd-GeV"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="gVq-ke-KgX">
+                                <rect key="frame" x="16" y="379.5" width="382" height="97.5"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VuT-79-kgO">
+                                        <rect key="frame" x="0.0" y="0.0" width="191" height="97.5"/>
+                                        <state key="normal" image="bubble-empty"/>
+                                        <connections>
+                                            <action selector="firstPersonCriteriaSelectionButtonTappedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bTc-eS-t5z"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nw2-LR-96G">
+                                        <rect key="frame" x="191" y="0.0" width="191" height="97.5"/>
+                                        <state key="normal" image="bubble-selected"/>
+                                        <connections>
+                                            <action selector="secondPersonCriteriaSelectionButtonTappedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xOM-Um-hXq"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.77000000000000002" green="0.10199999999999999" blue="0.085999999999999993" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gVq-ke-KgX" secondAttribute="trailing" constant="16" id="026-tf-jMh"/>
+                            <constraint firstItem="gVq-ke-KgX" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-20" id="5iO-qH-3yh"/>
+                            <constraint firstItem="gVq-ke-KgX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="6Hm-Sg-u0E"/>
+                            <constraint firstItem="2S1-22-5Iq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="HvR-bu-G8J"/>
+                            <constraint firstItem="2S1-22-5Iq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Nhd-xj-EKv"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2S1-22-5Iq" secondAttribute="bottom" id="a2h-yS-w1C"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2S1-22-5Iq" secondAttribute="trailing" id="vHg-Eo-vlV"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="rNw-Gf-bH0"/>
+                    <connections>
+                        <outlet property="backgroundMovieImageView" destination="2S1-22-5Iq" id="wgA-Dk-qxs"/>
+                        <outlet property="firstPersonCriteriaSelectionButton" destination="VuT-79-kgO" id="0mD-iZ-zlK"/>
+                        <outlet property="secondPersonCriteriaSelectionButton" destination="nw2-LR-96G" id="yRt-Mn-AwM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1047.8260869565217" y="63.616071428571423"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="IUl-vX-qzE">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Jit-uG-XaE" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PQW-ZO-ar6">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.77000000000000002" green="0.10199999999999999" blue="0.085999999999999993" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="HIM-Ti-gDf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DDe-90-KT2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="134.78260869565219" y="708.48214285714278"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="background" width="375.5" height="667.5"/>
+        <image name="bubble-empty" width="123.5" height="97.5"/>
+        <image name="bubble-selected" width="123.5" height="97.5"/>
+    </resources>
 </document>
