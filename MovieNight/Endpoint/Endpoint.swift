@@ -20,7 +20,7 @@ enum Endpoint: URLCreator {
     var path: String {
         switch self {
             case .fetchGenre: return "/3/genre/movie/list"
-            case .fetchPopularActors: return "/person/popular/"
+            case .fetchPopularActors: return "/3/person/popular"
             case .fetchActor: return "/search/person/"
             case .fetchCertifications: return "/certification/movie/list/"
             case .fetchMovie: return "/discover/movie/"

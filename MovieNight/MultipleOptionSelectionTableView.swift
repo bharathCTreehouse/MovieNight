@@ -10,7 +10,12 @@ import Foundation
 import UIKit
 
 
-protocol MultipleOptionSelectionDisplayable {
+protocol UniquelyIdentifiable {
+    var ID: String { get }
+}
+
+
+protocol MultipleOptionSelectionDisplayable:  UniquelyIdentifiable {
     var textDetail: TextWithAttribute { get }
     var selectionDetail: SelectionAttribute { get }
 }
@@ -20,11 +25,11 @@ protocol MultipleOptionSelectionDisplayable {
 class MultipleOptionSelectionTableView: UITableView {
     
     var tableViewDataSource: MultipleOptionSelectionTableViewDataSource? = nil
-    var selectionCompletionHandler: (([Int]) -> Void)? = nil
+    var selectionCompletionHandler: (([IndexPath]) -> Void)? = nil
     
     
     
-    init(withData data: [MultipleOptionSelectionDisplayable], selectionHandler: @escaping (([Int]) -> Void)) {
+    init(withData data: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]], selectionHandler: @escaping (([IndexPath]) -> Void)) {
         
         selectionCompletionHandler =  selectionHandler
         super.init(frame: .zero, style: .plain)
@@ -34,6 +39,13 @@ class MultipleOptionSelectionTableView: UITableView {
         self.dataSource = tableViewDataSource
         estimatedRowHeight = 65.0
         rowHeight = UITableView.automaticDimension
+        sectionHeaderHeight = 55.0
+    }
+    
+    
+    func update(withData data: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]]) {
+        
+        tableViewDataSource?.update(withData: data)
     }
     
     
@@ -44,7 +56,7 @@ class MultipleOptionSelectionTableView: UITableView {
     
     
     func fetchAllSelectedObjects() {
-        let indexes: [Int]? = tableViewDataSource?.allSelectedObjectIndexes()
+        let indexes: [IndexPath]? = tableViewDataSource?.allSelectedObjectIndexes()
         if let indexes = indexes {
             selectionCompletionHandler?(indexes)
         }

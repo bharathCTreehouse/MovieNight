@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class GenreSelectionViewController: UIViewController {
+class GenreSelectionViewController: MovieNightViewController {
     
     var tableView: MultipleOptionSelectionTableView? = nil
     let allGenres: [Genre]
@@ -18,9 +18,9 @@ class GenreSelectionViewController: UIViewController {
     
     
     
-    init(withGenres genres: [Genre]) {
+    init(withGenres genres: [Genre], movieCriteria: MovieCriteria) {
         allGenres = genres
-        super.init(nibName: nil, bundle: nil)
+        super.init(withMovieCriteria: movieCriteria)
         prepareData()
     }
     
@@ -36,9 +36,15 @@ class GenreSelectionViewController: UIViewController {
         
         self.view = UIView()
         
-        tableView = MultipleOptionSelectionTableView(withData: allGenreViewModels, selectionHandler: { (selectedIndexes: [Int]) -> Void in
+        let sectionInfo: TableViewSectionInfo = TableViewSectionInfo(title: "", ID: 0)
+        
+        tableView = MultipleOptionSelectionTableView(withData: [sectionInfo: allGenreViewModels], selectionHandler: { [unowned self] (selectedIndexes: [IndexPath]) -> Void in
             
-            print(selectedIndexes)
+            let selectedGenres: [Genre] = selectedIndexes.compactMap({ return self.allGenres[$0.row] })
+            self.movieCriteria.genres.append(contentsOf: selectedGenres)
+            
+            let actorSelectionVC: ActorSelectionViewController = ActorSelectionViewController(withMovieCriteria: self.movieCriteria)
+            self.navigationController?.pushViewController(actorSelectionVC, animated: true)
         })
         
         self.view.addSubview(tableView!)
@@ -77,6 +83,11 @@ class GenreSelectionViewController: UIViewController {
     
     @objc func nextButtonTapped(_ sender: UIBarButtonItem) {
         tableView?.fetchAllSelectedObjects()
+    }
+    
+    
+    deinit {
+        tableView = nil
     }
     
 }

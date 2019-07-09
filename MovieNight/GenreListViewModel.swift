@@ -23,6 +23,12 @@ class GenreListViewModel {
 extension GenreListViewModel: MultipleOptionSelectionDisplayable {
     
     
+    var ID: String {
+        return String(genre.ID)
+    }
+    
+    
+    
     var selectionDetail: SelectionAttribute {
         let color: UIColor = UIColor.init(red: 196.0/155.0, green: 26.0/155.0, blue: 22.0/155.0, alpha: 1.0)
         return SelectionAttribute(withSelected: false, color: color)

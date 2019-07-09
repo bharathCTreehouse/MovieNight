@@ -13,19 +13,43 @@ import UIKit
 
 class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSource {
     
-    let data: [MultipleOptionSelectionDisplayable]
+    var data: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]]
     weak var tableView: UITableView? = nil
+    private var indexes: [IndexPath] = []
     
     
-    init(withData data: [MultipleOptionSelectionDisplayable], tableView: UITableView) {
+    init(withData data: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]], tableView: UITableView) {
         self.data = data
         self.tableView = tableView
         tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: "cell")
     }
     
     
+    func update(withData data: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]]) {
+        self.data = data
+    }
+    
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.data.keys.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        let selectedMapperData: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == section })
+        
+        return selectedMapperData.keys.first!.title
+
+        
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        
+        let data: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == section })
+        return data.values.first!.count
     }
     
     
@@ -35,17 +59,18 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.selectionStyle = .none
         
-        let data: MultipleOptionSelectionDisplayable = self.data[indexPath.row]
+        let selectedMapperData: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == indexPath.section })
+
+        let data: MultipleOptionSelectionDisplayable = selectedMapperData.values.first![indexPath.row]
 
         
         if cell.accessoryView == nil {
             
-            let selectionSwitch: UISwitch = UISwitch.init()
-            selectionSwitch.addTarget(self, action: #selector(selectionSwitchToggled(_:)), for: .valueChanged)
-            selectionSwitch.tag = indexPath.row
-            cell.accessoryView = selectionSwitch
-            selectionSwitch.onTintColor = data.selectionDetail.selectionColor
-            selectionSwitch.setOn(data.selectionDetail.isSelected, animated: true)
+            let accessView: AccessorySwitchView = AccessorySwitchView(withIndexPath: indexPath)
+            cell.accessoryView = accessView
+            accessView.addTarget(self, action: #selector(selectionSwitchToggled(_:)), for: .valueChanged)
+            accessView.onTintColor = data.selectionDetail.selectionColor
+            accessView.setOn(data.selectionDetail.isSelected, animated: true)
         }
         
         cell.textLabel?.text = data.textDetail.text
@@ -59,17 +84,45 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
     
     
     
-    @objc func selectionSwitchToggled(_ sender: UISwitch) {
+    @objc func selectionSwitchToggled(_ sender: AccessorySwitchView) {
         
-        let data: MultipleOptionSelectionDisplayable = self.data[sender.tag]
+        let selectedMapperData: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == sender.indexPath.section })
+        
+        let data: MultipleOptionSelectionDisplayable = selectedMapperData.values.first![sender.indexPath.row]
+        
         data.selectionDetail.isSelected = sender.isOn
         
+        if sender.isOn == true {
+            indexes.append(sender.indexPath)
+        }
+        else {
+            indexes.removeAll(where: { return $0 == sender.indexPath })
+        }
+        
+        
+        for (key, value) in self.data {
+            
+            
+            if key.ID != sender.indexPath.section {
+                
+                let filteredList: [MultipleOptionSelectionDisplayable] = value.filter({ return $0.ID == data.ID })
+                
+                if filteredList.isEmpty == false {
+                    
+                    let matchedData: MultipleOptionSelectionDisplayable = filteredList.first!
+                    matchedData.selectionDetail.isSelected = sender.isOn
+                    
+                    let locationRow: Int = value.firstIndex(where: { return $0.ID == matchedData.ID})!
+                    self.tableView?.reloadRows(at: [IndexPath.init(row: locationRow, section: sender.indexPath.section)], with: .automatic)
+                }
+            }
+        }
     }
     
     
     
-    func allSelectedObjectIndexes() -> [Int] {
-        return [4,2,3]
+    func allSelectedObjectIndexes() -> [IndexPath] {
+        return indexes
     }
     
     

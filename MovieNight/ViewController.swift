@@ -13,15 +13,19 @@ class ViewController: UIViewController {
     @IBOutlet var backgroundMovieImageView: UIImageView!
     @IBOutlet var firstPersonCriteriaSelectionButton: UIButton!
     @IBOutlet var secondPersonCriteriaSelectionButton: UIButton!
+    
+    let movieCriteria: MovieCriteria = MovieCriteria(withGenres: [], actors: nil, certification: nil)
 
     
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         backgroundMovieImageView.sizeToFit()
     }
+    
     
     
     @IBAction func firstPersonCriteriaSelectionButtonTapped(sender: UIButton) {
@@ -35,7 +39,7 @@ class ViewController: UIViewController {
             }
             else {
                 if let allGenres =  allGenres {
-                    let genreVC: GenreSelectionViewController = GenreSelectionViewController(withGenres: allGenres)
+                    let genreVC: GenreSelectionViewController = GenreSelectionViewController(withGenres: allGenres, movieCriteria: self.movieCriteria)
                     self.navigationController?.pushViewController(genreVC, animated: true)
                 }
             }

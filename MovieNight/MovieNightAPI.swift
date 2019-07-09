@@ -34,6 +34,32 @@ class MovieNightAPI {
         
     }
     
+    
+    
+    
+    func fetchAllPopularActors(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Actor]?, Error?) -> ()) {
+        
+        
+        fetchData(forEndPoint: endPoint, completionHandler: { (data: Data?, error: Error?) -> () in
+            
+            if let error = error {
+                handler(nil, error)
+            }
+            else {
+                if let data = data {
+                    let jsonDecoder: JSONDecoder = JSONDecoder()
+                    let actorResultList: ActorResultList = try! jsonDecoder.decode(ActorResultList.self, from: data)
+                    handler(actorResultList.actors, nil)
+                }
+                else {
+                    handler(nil, error)
+                }
+            }
+        })
+        
+        
+    }
+    
 }
 
 
