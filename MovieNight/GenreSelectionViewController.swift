@@ -36,7 +36,7 @@ class GenreSelectionViewController: MovieNightViewController {
         
         self.view = UIView()
         
-        let sectionInfo: TableViewSectionInfo = TableViewSectionInfo(title: "", ID: 0)
+        let sectionInfo: TableViewSectionDetail = TableViewSectionDetail(withHeader: nil, footer: nil, identifier: 0)
         
         tableView = MultipleOptionSelectionTableView(withData: [sectionInfo: allGenreViewModels], selectionHandler: { [unowned self] (selectedIndexes: [IndexPath]) -> Void in
             

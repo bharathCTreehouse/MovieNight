@@ -13,19 +13,20 @@ import UIKit
 
 class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSource {
     
-    var data: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]]
+    var data: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]]
     weak var tableView: UITableView? = nil
     private var indexes: [IndexPath] = []
     
     
-    init(withData data: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]], tableView: UITableView) {
+    init(withData data: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]], tableView: UITableView) {
         self.data = data
         self.tableView = tableView
         tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: "cell")
+        
     }
     
     
-    func update(withData data: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]]) {
+    func update(withData data: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]]) {
         self.data = data
     }
     
@@ -38,17 +39,58 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        let selectedMapperData: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == section })
+        let selectedMapperData: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == section })
         
-        return selectedMapperData.keys.first!.title
-
+        let detail: TableViewSectionDetail = selectedMapperData.keys.first!
+        
+        
+        guard let _ = detail.sectionHeader else {
+            return nil
+        }
+        
+        switch detail.sectionHeader! {
+            case .header(let sectionDisplay):
+                switch (sectionDisplay) {
+                    case .title(let headerTitle): return headerTitle
+                    case .view(_, _): return nil
+                }
+            
+            default: return nil
+        }
         
     }
     
     
+    
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        
+        
+        let selectedMapperData: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == section })
+        
+        let detail: TableViewSectionDetail = selectedMapperData.keys.first!
+        
+        
+        guard let _ = detail.sectionFooter else {
+            return nil
+        }
+        
+        switch detail.sectionFooter! {
+            case .footer(let sectionDisplay):
+                switch (sectionDisplay) {
+                    case .title(let footerTitle): return footerTitle
+                    case .view(_, _): return nil
+                }
+            default: return nil
+            
+        }
+    }
+    
+    
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let data: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == section })
+        let data: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == section })
         return data.values.first!.count
     }
     
@@ -59,7 +101,7 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.selectionStyle = .none
         
-        let selectedMapperData: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == indexPath.section })
+        let selectedMapperData: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == indexPath.section })
 
         let data: MultipleOptionSelectionDisplayable = selectedMapperData.values.first![indexPath.row]
 
@@ -86,7 +128,7 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
     
     @objc func selectionSwitchToggled(_ sender: AccessorySwitchView) {
         
-        let selectedMapperData: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == sender.indexPath.section })
+        let selectedMapperData: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == sender.indexPath.section })
         
         let data: MultipleOptionSelectionDisplayable = selectedMapperData.values.first![sender.indexPath.row]
         
@@ -132,4 +174,110 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
     }
     
  
+}
+
+
+
+extension MultipleOptionSelectionTableViewDataSource: UITableViewDelegate {
+    
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
+        let selectedMapperData: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == section })
+        
+        let detail: TableViewSectionDetail = selectedMapperData.keys.first!
+        
+        
+        guard let _ = detail.sectionFooter else {
+            return 0.0
+        }
+        
+        
+        switch detail.sectionFooter! {
+            
+            case .footer(let sectionDisplay):
+                switch (sectionDisplay) {
+                    case .view(_, let height): return height
+                    default: return UITableView.automaticDimension
+            }
+            default: return 0.0
+            
+        }
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        
+        let selectedMapperData: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == section })
+        
+        let detail: TableViewSectionDetail = selectedMapperData.keys.first!
+        
+        guard let _ = detail.sectionFooter else {
+            return nil
+        }
+        
+        switch detail.sectionFooter! {
+            
+            case .footer(let sectionDisplay):
+                switch (sectionDisplay) {
+                    case .view(let viewToDisplay, _): return viewToDisplay
+                    default: return nil
+                }
+            default: return nil
+            
+        }
+    }
+    
+    
+    
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        
+        let selectedMapperData: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == section })
+        
+        let detail: TableViewSectionDetail = selectedMapperData.keys.first!
+        
+        guard let _ = detail.sectionHeader else {
+            return 0.0
+        }
+        
+        switch detail.sectionHeader! {
+            
+            case .header(let sectionDisplay):
+                switch (sectionDisplay) {
+                    case .view(_, let height): return height
+                    default: return UITableView.automaticDimension
+                }
+            default: return 0.0
+            
+        }
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let selectedMapperData: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == section })
+        
+        let detail: TableViewSectionDetail = selectedMapperData.keys.first!
+        
+        
+        guard let _ = detail.sectionHeader else {
+            return nil
+        }
+        
+        switch detail.sectionHeader! {
+            
+            case .header(let sectionDisplay):
+                switch (sectionDisplay) {
+                    case .view(let viewToDisplay, _): return viewToDisplay
+                    default: return nil
+                }
+            default: return nil
+            
+        }
+    }
+    
 }

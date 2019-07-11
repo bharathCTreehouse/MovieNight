@@ -29,7 +29,7 @@ class MultipleOptionSelectionTableView: UITableView {
     
     
     
-    init(withData data: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]], selectionHandler: @escaping (([IndexPath]) -> Void)) {
+    init(withData data: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]], selectionHandler: @escaping (([IndexPath]) -> Void)) {
         
         selectionCompletionHandler =  selectionHandler
         super.init(frame: .zero, style: .plain)
@@ -37,13 +37,13 @@ class MultipleOptionSelectionTableView: UITableView {
         
         tableViewDataSource = MultipleOptionSelectionTableViewDataSource(withData: data, tableView: self)
         self.dataSource = tableViewDataSource
+        self.delegate = tableViewDataSource
         estimatedRowHeight = 65.0
         rowHeight = UITableView.automaticDimension
-        sectionHeaderHeight = 55.0
     }
     
     
-    func update(withData data: [TableViewSectionInfo: [MultipleOptionSelectionDisplayable]]) {
+    func update(withData data: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]]) {
         
         tableViewDataSource?.update(withData: data)
     }
