@@ -12,7 +12,7 @@ import UIKit
 
 class AccessorySwitchView: UISwitch {
     
-    let indexPath: IndexPath
+    private(set) var indexPath: IndexPath
     
     
     init(withIndexPath indexPath: IndexPath) {
@@ -23,10 +23,14 @@ class AccessorySwitchView: UISwitch {
     }
     
     
-    
     required init?(coder aDecoder: NSCoder) {
         self.indexPath = IndexPath(row: 0, section: 0)
         super.init(coder: aDecoder)
+    }
+    
+    
+    func update(withIndexPath indexPath: IndexPath) {
+        self.indexPath =  indexPath
     }
     
 }

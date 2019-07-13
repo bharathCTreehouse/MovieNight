@@ -21,7 +21,7 @@ enum Endpoint: URLCreator {
         switch self {
             case .fetchGenre: return "/3/genre/movie/list"
             case .fetchPopularActors: return "/3/person/popular"
-            case .fetchActor: return "/search/person/"
+            case .fetchActor: return "/3/search/person"
             case .fetchCertifications: return "/certification/movie/list/"
             case .fetchMovie: return "/discover/movie/"
         }

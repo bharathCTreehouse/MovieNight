@@ -37,7 +37,7 @@ class MovieNightAPI {
     
     
     
-    func fetchAllPopularActors(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Actor]?, Error?) -> ()) {
+    func fetchActors(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Actor]?, Error?) -> ()) {
         
         
         fetchData(forEndPoint: endPoint, completionHandler: { (data: Data?, error: Error?) -> () in

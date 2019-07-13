@@ -44,11 +44,11 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
         let detail: TableViewSectionDetail = selectedMapperData.keys.first!
         
         
-        guard let _ = detail.sectionHeader else {
+        guard let sectionHeader = detail.sectionHeader else {
             return nil
         }
         
-        switch detail.sectionHeader! {
+        switch sectionHeader {
             case .header(let sectionDisplay):
                 switch (sectionDisplay) {
                     case .title(let headerTitle): return headerTitle
@@ -70,11 +70,11 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
         let detail: TableViewSectionDetail = selectedMapperData.keys.first!
         
         
-        guard let _ = detail.sectionFooter else {
+        guard let sectionFooter = detail.sectionFooter else {
             return nil
         }
         
-        switch detail.sectionFooter! {
+        switch sectionFooter {
             case .footer(let sectionDisplay):
                 switch (sectionDisplay) {
                     case .title(let footerTitle): return footerTitle
@@ -106,14 +106,20 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
         let data: MultipleOptionSelectionDisplayable = selectedMapperData.values.first![indexPath.row]
 
         
-        if cell.accessoryView == nil {
+        var accessorySwitchView: AccessorySwitchView? = cell.accessoryView as? AccessorySwitchView
+        
+        if accessorySwitchView == nil {
             
-            let accessView: AccessorySwitchView = AccessorySwitchView(withIndexPath: indexPath)
-            cell.accessoryView = accessView
-            accessView.addTarget(self, action: #selector(selectionSwitchToggled(_:)), for: .valueChanged)
-            accessView.onTintColor = data.selectionDetail.selectionColor
-            accessView.setOn(data.selectionDetail.isSelected, animated: true)
+            accessorySwitchView = AccessorySwitchView(withIndexPath: indexPath)
+            cell.accessoryView = accessorySwitchView
+            accessorySwitchView!.addTarget(self, action: #selector(selectionSwitchToggled(_:)), for: .valueChanged)
+            accessorySwitchView!.onTintColor = data.selectionDetail.selectionColor
         }
+        else {
+            accessorySwitchView!.update(withIndexPath: indexPath)
+        }
+        accessorySwitchView!.setOn(data.selectionDetail.isSelected, animated: true)
+
         
         cell.textLabel?.text = data.textDetail.text
         cell.textLabel?.font = data.textDetail.font
@@ -130,9 +136,9 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
         
         let selectedMapperData: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == sender.indexPath.section })
         
-        let data: MultipleOptionSelectionDisplayable = selectedMapperData.values.first![sender.indexPath.row]
+        var data: MultipleOptionSelectionDisplayable = selectedMapperData.values.first![sender.indexPath.row]
         
-        data.selectionDetail.isSelected = sender.isOn
+        data.selectionDetail.changeSelectedState(to: sender.isOn)
         
         if sender.isOn == true {
             indexes.append(sender.indexPath)
@@ -151,11 +157,11 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
                 
                 if filteredList.isEmpty == false {
                     
-                    let matchedData: MultipleOptionSelectionDisplayable = filteredList.first!
-                    matchedData.selectionDetail.isSelected = sender.isOn
+                    var matchedData: MultipleOptionSelectionDisplayable = filteredList.first!
+                    matchedData.selectionDetail.changeSelectedState(to: sender.isOn)
                     
                     let locationRow: Int = value.firstIndex(where: { return $0.ID == matchedData.ID})!
-                    self.tableView?.reloadRows(at: [IndexPath.init(row: locationRow, section: sender.indexPath.section)], with: .automatic)
+                    self.tableView?.reloadRows(at: [IndexPath.init(row: locationRow, section: key.ID)], with: .automatic)
                 }
             }
         }
@@ -188,12 +194,12 @@ extension MultipleOptionSelectionTableViewDataSource: UITableViewDelegate {
         let detail: TableViewSectionDetail = selectedMapperData.keys.first!
         
         
-        guard let _ = detail.sectionFooter else {
+        guard let sectionFooter = detail.sectionFooter else {
             return 0.0
         }
         
         
-        switch detail.sectionFooter! {
+        switch sectionFooter {
             
             case .footer(let sectionDisplay):
                 switch (sectionDisplay) {
@@ -214,11 +220,11 @@ extension MultipleOptionSelectionTableViewDataSource: UITableViewDelegate {
         
         let detail: TableViewSectionDetail = selectedMapperData.keys.first!
         
-        guard let _ = detail.sectionFooter else {
+        guard let sectionFooter = detail.sectionFooter else {
             return nil
         }
         
-        switch detail.sectionFooter! {
+        switch sectionFooter {
             
             case .footer(let sectionDisplay):
                 switch (sectionDisplay) {
@@ -239,11 +245,11 @@ extension MultipleOptionSelectionTableViewDataSource: UITableViewDelegate {
         
         let detail: TableViewSectionDetail = selectedMapperData.keys.first!
         
-        guard let _ = detail.sectionHeader else {
+        guard let sectionHeader = detail.sectionHeader else {
             return 0.0
         }
         
-        switch detail.sectionHeader! {
+        switch sectionHeader {
             
             case .header(let sectionDisplay):
                 switch (sectionDisplay) {
@@ -264,11 +270,11 @@ extension MultipleOptionSelectionTableViewDataSource: UITableViewDelegate {
         let detail: TableViewSectionDetail = selectedMapperData.keys.first!
         
         
-        guard let _ = detail.sectionHeader else {
+        guard let sectionHeader = detail.sectionHeader else {
             return nil
         }
         
-        switch detail.sectionHeader! {
+        switch sectionHeader {
             
             case .header(let sectionDisplay):
                 switch (sectionDisplay) {

@@ -17,7 +17,7 @@ protocol UniquelyIdentifiable {
 
 protocol MultipleOptionSelectionDisplayable:  UniquelyIdentifiable {
     var textDetail: TextWithAttribute { get }
-    var selectionDetail: SelectionAttribute { get }
+    var selectionDetail: SelectionAttribute { set get }
 }
 
 

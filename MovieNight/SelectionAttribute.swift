@@ -10,13 +10,18 @@ import Foundation
 import UIKit
 
 
-class SelectionAttribute {
+struct SelectionAttribute {
     
-    var isSelected: Bool = false
+    private(set) var isSelected: Bool = false
     let selectionColor: UIColor
     
     init(withSelected selected: Bool, color: UIColor) {
         isSelected = selected
         selectionColor = color
+    }
+    
+    
+    mutating func changeSelectedState(to state: Bool) {
+        self.isSelected = state
     }
 }

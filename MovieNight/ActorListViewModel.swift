@@ -13,6 +13,8 @@ import UIKit
 class ActorListViewModel {
     
     let actor: Actor
+    var isSelected: Bool = false
+
     
     init(withActor actor: Actor) {
         self.actor = actor
@@ -24,8 +26,14 @@ extension ActorListViewModel: MultipleOptionSelectionDisplayable {
     
     
     var selectionDetail: SelectionAttribute {
-        let color: UIColor = UIColor.init(red: 196.0/155.0, green: 26.0/155.0, blue: 22.0/155.0, alpha: 1.0)
-        return SelectionAttribute(withSelected: false, color: color)
+        
+        set(value) {
+            self.isSelected = value.isSelected
+        }
+        get {
+            let color: UIColor = UIColor.init(red: 196.0/155.0, green: 26.0/155.0, blue: 22.0/155.0, alpha: 1.0)
+            return SelectionAttribute(withSelected: isSelected, color: color)
+        }
     }
     
     

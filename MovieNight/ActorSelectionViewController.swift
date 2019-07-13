@@ -104,7 +104,7 @@ class ActorSelectionViewController: MovieNightViewController {
         
         let movieNightClient: MovieNightAPI = MovieNightAPI()
         
-        movieNightClient.fetchAllPopularActors(withEndPoint: Endpoint.fetchPopularActors, completionHandler: { [unowned self] (actors: [Actor]?, error: Error?) -> Void in
+        movieNightClient.fetchActors(withEndPoint: Endpoint.fetchPopularActors, completionHandler: { [unowned self] (actors: [Actor]?, error: Error?) -> Void in
             
             if let error = error {
                 print("Error: \(error)")
@@ -131,4 +131,35 @@ class ActorSelectionViewController: MovieNightViewController {
 
 extension ActorSelectionViewController: UISearchBarDelegate {
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        self.view.endEditing(true)
+        
+        guard let searchText = searchBar.text else {
+            return
+        }
+        searchActor(withName: searchText)
+    }
+    
+    
+    func searchActor(withName name: String) {
+        
+        let movieNightClient: MovieNightAPI = MovieNightAPI()
+        
+        movieNightClient.fetchActors(withEndPoint: Endpoint.fetchActor(name: name), completionHandler: { [unowned self] (actors: [Actor]?, error: Error?) -> Void in
+            
+            if let error = error {
+                print("Error: \(error)")
+            }
+            else {
+                if let actors = actors {
+                    self.searchedActors = actors
+                }
+            }
+        })
+    }
 }
+
+
+
+
