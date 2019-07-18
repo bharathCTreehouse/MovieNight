@@ -49,4 +49,10 @@ extension GenreListViewModel: MultipleOptionSelectionDisplayable {
         return TextWithAttribute(text: genre.name, font: font, color: color)
     }
     
+    
+    var contentImage: UIImage? {
+        return nil
+    }
+
+    
 }

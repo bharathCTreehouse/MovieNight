@@ -15,7 +15,7 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
     
     var data: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]]
     weak var tableView: UITableView? = nil
-    private var indexes: [IndexPath] = []
+    private var selectedObjectIDs: [String] = []
     
     
     init(withData data: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]], tableView: UITableView) {
@@ -103,7 +103,7 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
         
         let selectedMapperData: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]] = self.data.filter({ return $0.key.ID == indexPath.section })
 
-        let data: MultipleOptionSelectionDisplayable = selectedMapperData.values.first![indexPath.row]
+        var data: MultipleOptionSelectionDisplayable = selectedMapperData.values.first![indexPath.row]
 
         
         var accessorySwitchView: AccessorySwitchView? = cell.accessoryView as? AccessorySwitchView
@@ -118,12 +118,19 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
         else {
             accessorySwitchView!.update(withIndexPath: indexPath)
         }
-        accessorySwitchView!.setOn(data.selectionDetail.isSelected, animated: true)
-
+        accessorySwitchView!.setOn(data.selectionDetail.isSelected, animated: false)
+        
+        if accessorySwitchView!.isOn == false {
+            if self.selectedObjectIDs.contains(data.ID) {
+                data.selectionDetail.changeSelectedState(to: true)
+                accessorySwitchView!.setOn(true, animated: false)
+            }
+        }
         
         cell.textLabel?.text = data.textDetail.text
         cell.textLabel?.font = data.textDetail.font
         cell.textLabel?.textColor = data.textDetail.color
+        cell.imageView?.image = data.contentImage
         
         return cell
         
@@ -141,10 +148,10 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
         data.selectionDetail.changeSelectedState(to: sender.isOn)
         
         if sender.isOn == true {
-            indexes.append(sender.indexPath)
+            selectedObjectIDs.append(data.ID)
         }
         else {
-            indexes.removeAll(where: { return $0 == sender.indexPath })
+            selectedObjectIDs.removeAll(where: { return $0 == data.ID })
         }
         
         
@@ -169,8 +176,8 @@ class MultipleOptionSelectionTableViewDataSource: NSObject, UITableViewDataSourc
     
     
     
-    func allSelectedObjectIndexes() -> [IndexPath] {
-        return indexes
+    func allSelectedObjectIDs() -> [String] {
+        return selectedObjectIDs
     }
     
     

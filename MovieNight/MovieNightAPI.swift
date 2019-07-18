@@ -60,6 +60,32 @@ class MovieNightAPI {
         
     }
     
+    
+    
+    func fetchImageConfiguration(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping (ImageConfiguration?, Error?) -> ()) {
+        
+        
+        fetchData(forEndPoint: endPoint, completionHandler: { (data: Data?, error: Error?) -> () in
+            
+            if let error = error {
+                handler(nil, error)
+            }
+            else {
+                if let data = data {
+                    let jsonDecoder: JSONDecoder = JSONDecoder()
+                    jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let imageConfig: ImageConfiguration = try! jsonDecoder.decode(ImageConfiguration.self, from: data)
+                    handler(imageConfig, nil)
+                }
+                else {
+                    handler(nil, error)
+                }
+            }
+        })
+        
+        
+    }
+    
 }
 
 

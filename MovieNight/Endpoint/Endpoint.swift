@@ -16,14 +16,17 @@ enum Endpoint: URLCreator {
     case fetchActor(name: String)
     case fetchCertifications
     case fetchMovie(genreIDs: [String], actorIDs: [String]?, certification: Certification?)
+    case fetchImageConfiguration
     
     var path: String {
         switch self {
             case .fetchGenre: return "/3/genre/movie/list"
             case .fetchPopularActors: return "/3/person/popular"
             case .fetchActor: return "/3/search/person"
-            case .fetchCertifications: return "/certification/movie/list/"
-            case .fetchMovie: return "/discover/movie/"
+            case .fetchCertifications: return "/3/certification/movie/list"
+            case .fetchMovie: return "/3/discover/movie"
+            case .fetchImageConfiguration: return "/3/configuration"
+
         }
     }
     

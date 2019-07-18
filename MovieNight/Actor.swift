@@ -13,10 +13,13 @@ struct Actor: Decodable {
     
     let name: String
     let ID: Int
+    let profilePath: String
+    
     
     enum DecodableKeys: String, CodingKey {
         case ID = "id"
         case name
+        case profilePath = "profile_path"
     }
     
     
@@ -26,6 +29,8 @@ struct Actor: Decodable {
         
         self.ID = try container.decode(Int.self, forKey: .ID)
         self.name = try container.decode(String.self, forKey: .name)
+        self.profilePath = try container.decode(String.self, forKey: .profilePath)
+
     }
     
 }

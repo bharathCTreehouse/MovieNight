@@ -18,6 +18,7 @@ protocol UniquelyIdentifiable {
 protocol MultipleOptionSelectionDisplayable:  UniquelyIdentifiable {
     var textDetail: TextWithAttribute { get }
     var selectionDetail: SelectionAttribute { set get }
+    var contentImage: UIImage? { get }
 }
 
 
@@ -25,11 +26,11 @@ protocol MultipleOptionSelectionDisplayable:  UniquelyIdentifiable {
 class MultipleOptionSelectionTableView: UITableView {
     
     var tableViewDataSource: MultipleOptionSelectionTableViewDataSource? = nil
-    var selectionCompletionHandler: (([IndexPath]) -> Void)? = nil
+    var selectionCompletionHandler: (([String]) -> Void)? = nil
     
     
     
-    init(withData data: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]], selectionHandler: @escaping (([IndexPath]) -> Void)) {
+    init(withData data: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]], selectionHandler: @escaping (([String]) -> Void)) {
         
         selectionCompletionHandler =  selectionHandler
         super.init(frame: .zero, style: .plain)
@@ -56,9 +57,9 @@ class MultipleOptionSelectionTableView: UITableView {
     
     
     func fetchAllSelectedObjects() {
-        let indexes: [IndexPath]? = tableViewDataSource?.allSelectedObjectIndexes()
-        if let indexes = indexes {
-            selectionCompletionHandler?(indexes)
+        let objectIDs: [String]? = tableViewDataSource?.allSelectedObjectIDs()
+        if let objectIDs = objectIDs {
+            selectionCompletionHandler?(objectIDs)
         }
     }
     

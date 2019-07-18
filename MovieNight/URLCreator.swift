@@ -22,12 +22,6 @@ extension URLCreator {
     }
     
     
-//    var queryItems: [URLQueryItem] {
-//        let item: URLQueryItem = URLQueryItem(name: "api_key", value: "8102c0c8495a01ed0e10caccf707a760")
-//        return [item]
-//    }
-
-    
     var request: URLRequest? {
         
         var urlComponents: URLComponents? = URLComponents(url: URL(string: base)!, resolvingAgainstBaseURL: true)

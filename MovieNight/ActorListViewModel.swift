@@ -14,6 +14,7 @@ class ActorListViewModel {
     
     let actor: Actor
     var isSelected: Bool = false
+    var profileImage: UIImage? = nil
 
     
     init(withActor actor: Actor) {
@@ -50,4 +51,8 @@ extension ActorListViewModel: MultipleOptionSelectionDisplayable {
     }
     
     
+    var contentImage: UIImage? {
+        return profileImage
+    }
+
 }
