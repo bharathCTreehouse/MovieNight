@@ -14,22 +14,21 @@ class ActorSelectionViewController: MovieNightViewController {
     
     var searchBar: UISearchBar? = nil
     var tableView: MultipleOptionSelectionTableView? = nil
-    let apiGroup: DispatchGroup = DispatchGroup.init()
-    var imageConfiguration: ImageConfiguration? = nil
+    let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
 
 
     var popularActorsViewModel: [MultipleOptionSelectionDisplayable] = [] {
         didSet {
              self.tableView?.update(withData: [self.popularSectionInfo: self.popularActorsViewModel, self.searchSectionInfo: self.searchedActorsViewModel])
             self.tableView?.reloadSections(IndexSet.init(integer: 1), with: .automatic)
+            fetchActorProfileImages(forFetchType: .popular)
         }
     }
     var searchedActorsViewModel: [MultipleOptionSelectionDisplayable] = [] {
         didSet {
-            
             self.tableView?.update(withData: [self.popularSectionInfo: self.popularActorsViewModel, self.searchSectionInfo: self.searchedActorsViewModel])
             self.tableView?.reloadSections(IndexSet.init(integer: 0), with: .automatic)
-
+            fetchActorProfileImages(forFetchType: .searched)
         }
     }
     
@@ -53,43 +52,7 @@ class ActorSelectionViewController: MovieNightViewController {
     
     override init(withMovieCriteria criteria: MovieCriteria) {
         super.init(withMovieCriteria: criteria)
-        
-        apiGroup.enter()
-        apiGroup.enter()
-        
-        apiGroup.notify(queue: DispatchQueue.init(label: "apiQueue", qos: .background, attributes: .concurrent, autoreleaseFrequency: .never, target: nil), execute: { [unowned self] () -> Void in
-            
-            let imageQueue: OperationQueue = OperationQueue.init()
-            
-            for (index, data) in self.popularActorsViewModel.enumerated() {
-                
-                let viewModel: ActorListViewModel? = data as? ActorListViewModel
-                if viewModel == nil {
-                    continue
-                }
-                let imageURL: URL? = self.imageConfiguration?.urlFor(imagePath: viewModel!.actor.profilePath, withImageCategory: ImageCategory.profile(.original))
-                if imageURL == nil {
-                    continue
-                }
-                
-                let imageOperation: ActorListImageOperation =  ActorListImageOperation(withActorListViewModel: viewModel!, uniqueIdentifier: index, url: imageURL!, actorFetchType: .popular, completionHandler: { (identifier: Int?, fetchType: ActorFetchType, error: Error?) -> Void in
-                    
-                    if error == nil {
-                        
-                        if let identifier = identifier {
-                            self.tableView?.reloadRows(at: [IndexPath.init(row: identifier, section: 1)], with: .automatic)
-                        }
-                    }
-                    
-                })
-                
-                imageQueue.addOperation(imageOperation)
-            }
-            
-        })
-        
         fetchAllPopularActors()
-        fetchImageConfiguration()
     }
     
     
@@ -115,7 +78,7 @@ class ActorSelectionViewController: MovieNightViewController {
         searchBar!.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
         
         
-        tableView = MultipleOptionSelectionTableView(withData: [searchSectionInfo: searchedActorsViewModel, popularSectionInfo: popularActorsViewModel], selectionHandler: { [unowned self] (selectedIDs: [String]) -> Void in
+        tableView = MultipleOptionSelectionTableView(withData: [searchSectionInfo: searchedActorsViewModel, popularSectionInfo: popularActorsViewModel], tableViewRowHeight: 90.0, selectionHandler: { [unowned self] (selectedIDs: [String]) -> Void in
             
             self.movieCriteria.addActors(withIDs_: selectedIDs)
             
@@ -158,7 +121,6 @@ class ActorSelectionViewController: MovieNightViewController {
                 }
             }
             
-            self.apiGroup.leave()
         })
         
     }
@@ -174,26 +136,6 @@ class ActorSelectionViewController: MovieNightViewController {
     @objc func nextButtonTapped(_ sender: UIBarButtonItem) {
         tableView?.fetchAllSelectedObjects()
     }
-    
-    
-    
-    func fetchImageConfiguration() {
-        
-        let movieAPI: MovieNightAPI = MovieNightAPI()
-        
-        movieAPI.fetchImageConfiguration(withEndPoint: Endpoint.fetchImageConfiguration, completionHandler: { [unowned self] (imgConfig: ImageConfiguration?, error: Error?) -> Void in
-            
-            if let error = error {
-                print("Error: \(error)")
-            }
-            else {
-                self.imageConfiguration = imgConfig
-            }
-            
-            self.apiGroup.leave()
-        })
-    }
-    
     
     
     deinit {
@@ -233,6 +175,56 @@ extension ActorSelectionViewController: UISearchBarDelegate {
                 }
             }
         })
+    }
+}
+
+
+
+
+extension ActorSelectionViewController {
+    
+    
+    func fetchActorProfileImages(forFetchType fetchType: ActorFetchType) {
+        
+        var list: [MultipleOptionSelectionDisplayable] = self.popularActorsViewModel
+        var section: Int = 1
+        
+        if fetchType == .searched {
+            list = self.searchedActorsViewModel
+            section = 0
+        }
+        
+        let imageQueue: OperationQueue = OperationQueue.init()
+        
+        
+        for (index, data) in list.enumerated() {
+            
+            let viewModel: ActorListViewModel? = data as? ActorListViewModel
+            if viewModel == nil {
+                continue
+            }
+            if viewModel!.actor.profilePath == nil {
+                continue
+            }
+            let imageURL: URL? = self.appDelegate?.imageConfiguration?.urlFor(imagePath: viewModel!.actor.profilePath!, withImageCategory: ImageCategory.profile(.original))
+            if imageURL == nil {
+                continue
+            }
+            
+            let imageOperation: ActorListImageOperation =  ActorListImageOperation(withActorListViewModel: viewModel!, uniqueIdentifier: index, url: imageURL!, actorFetchType: fetchType, completionHandler: { (identifier: Int?, fetchType: ActorFetchType, error: Error?) -> Void in
+                
+                if error == nil {
+                    
+                    if let identifier = identifier {
+                        self.tableView?.reloadRows(at: [IndexPath.init(row: identifier, section: section)], with: .automatic)
+                    }
+                }
+                
+            })
+            
+            imageQueue.addOperation(imageOperation)
+        }
+        
     }
 }
 

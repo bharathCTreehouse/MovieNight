@@ -30,9 +30,14 @@ class ViewController: UIViewController {
     
     @IBAction func firstPersonCriteriaSelectionButtonTapped(sender: UIButton) {
         
-        let movieNightAPI: MovieNightAPI = MovieNightAPI()
         
-        movieNightAPI.fetchAllGenres(withEndPoint: Endpoint.fetchGenre, completionHandler: { [unowned self] (allGenres: [Genre]?, error: Error?) -> () in
+        let appDelegate: AppDelegate? =  UIApplication.shared.delegate as? AppDelegate
+        
+        if appDelegate?.imageConfiguration == nil {
+            fetchImageConfiguration()
+        }
+        
+        MovieNightAPI().fetchAllGenres(withEndPoint: Endpoint.fetchGenre, completionHandler: { [unowned self] (allGenres: [Genre]?, error: Error?) -> () in
             
             if let error = error {
                 print("ERROR: \(error)")
@@ -49,7 +54,31 @@ class ViewController: UIViewController {
     
     
     @IBAction func secondPersonCriteriaSelectionButtonTapped(sender: UIButton) {
-
+        
+        let appDelegate: AppDelegate? =  UIApplication.shared.delegate as? AppDelegate
+        
+        if appDelegate?.imageConfiguration == nil {
+            fetchImageConfiguration()
+        }
+    }
+    
+    
+    
+    func fetchImageConfiguration() {
+        
+        let movieAPI: MovieNightAPI = MovieNightAPI()
+        
+        movieAPI.fetchImageConfiguration(withEndPoint: Endpoint.fetchImageConfiguration, completionHandler: { (imgConfig: ImageConfiguration?, error: Error?) -> Void in
+            
+            if let error = error {
+                print("Error: \(error)")
+            }
+            else {
+                let appDelegate: AppDelegate? =  UIApplication.shared.delegate as? AppDelegate
+                appDelegate?.imageConfiguration = imgConfig
+            }
+            
+        })
     }
     
     

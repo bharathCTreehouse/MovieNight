@@ -30,7 +30,7 @@ class MultipleOptionSelectionTableView: UITableView {
     
     
     
-    init(withData data: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]], selectionHandler: @escaping (([String]) -> Void)) {
+    init(withData data: [TableViewSectionDetail: [MultipleOptionSelectionDisplayable]], tableViewRowHeight: CGFloat = UITableView.automaticDimension, selectionHandler: @escaping (([String]) -> Void)) {
         
         selectionCompletionHandler =  selectionHandler
         super.init(frame: .zero, style: .plain)
@@ -40,7 +40,7 @@ class MultipleOptionSelectionTableView: UITableView {
         self.dataSource = tableViewDataSource
         self.delegate = tableViewDataSource
         estimatedRowHeight = 65.0
-        rowHeight = UITableView.automaticDimension
+        rowHeight = tableViewRowHeight
     }
     
     

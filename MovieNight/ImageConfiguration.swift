@@ -105,11 +105,11 @@ extension ImageConfiguration {
         
         switch category {
             
-            case .backdrop(let size): urlString.append(size.rawValue)
-            case .logo(let size): urlString.append(size.rawValue)
-            case .poster(let size): urlString.append(size.rawValue)
-            case .profile(let size): urlString.append(size.rawValue)
-            case .still(let size): urlString.append(size.rawValue)
+        case .backdrop(let size): urlString.append(size.rawValue)
+        case .logo(let size): urlString.append(size.rawValue)
+        case .poster(let size): urlString.append(size.rawValue)
+        case .profile(let size): urlString.append(size.rawValue)
+        case .still(let size): urlString.append(size.rawValue)
         }
         
         urlString.append(path)
