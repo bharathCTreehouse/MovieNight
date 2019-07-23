@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		8E0A5DDD22D5257A006B15A5 /* ActorResultList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A5DDC22D5257A006B15A5 /* ActorResultList.swift */; };
 		8E0A5DDF22D5B366006B15A5 /* ActorListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A5DDE22D5B366006B15A5 /* ActorListViewModel.swift */; };
+		8E2080F522E4964E004D6338 /* CertificationResultList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2080F422E4964E004D6338 /* CertificationResultList.swift */; };
+		8E2080F722E4C1C6004D6338 /* CertificationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2080F622E4C1C6004D6338 /* CertificationListViewModel.swift */; };
+		8E2080FA22E5CE05004D6338 /* CertificationSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2080F822E5CE05004D6338 /* CertificationSelectionViewController.swift */; };
+		8E2080FD22E5D325004D6338 /* SingleLabelDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2080FC22E5D325004D6338 /* SingleLabelDisplayView.swift */; };
+		8E2080FF22E61F7E004D6338 /* BasicSelectionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2080FE22E61F7E004D6338 /* BasicSelectionPickerView.swift */; };
+		8E20810222E624A8004D6338 /* SelectionPickerViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20810122E624A8004D6338 /* SelectionPickerViewDataSource.swift */; };
+		8E20810422E62738004D6338 /* BasicSelectionPickerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20810322E62738004D6338 /* BasicSelectionPickerViewDelegate.swift */; };
 		8E21881622CA661A004947F8 /* MultipleOptionSelectionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21881522CA661A004947F8 /* MultipleOptionSelectionTableView.swift */; };
 		8E21881822CA9126004947F8 /* MultipleOptionSelectionTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21881722CA9126004947F8 /* MultipleOptionSelectionTableViewDataSource.swift */; };
 		8E21881A22CB2115004947F8 /* GenreListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21881922CB2115004947F8 /* GenreListViewModel.swift */; };
@@ -41,6 +48,13 @@
 /* Begin PBXFileReference section */
 		8E0A5DDC22D5257A006B15A5 /* ActorResultList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorResultList.swift; sourceTree = "<group>"; };
 		8E0A5DDE22D5B366006B15A5 /* ActorListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorListViewModel.swift; sourceTree = "<group>"; };
+		8E2080F422E4964E004D6338 /* CertificationResultList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationResultList.swift; sourceTree = "<group>"; };
+		8E2080F622E4C1C6004D6338 /* CertificationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationListViewModel.swift; sourceTree = "<group>"; };
+		8E2080F822E5CE05004D6338 /* CertificationSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationSelectionViewController.swift; sourceTree = "<group>"; };
+		8E2080FC22E5D325004D6338 /* SingleLabelDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelDisplayView.swift; sourceTree = "<group>"; };
+		8E2080FE22E61F7E004D6338 /* BasicSelectionPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSelectionPickerView.swift; sourceTree = "<group>"; };
+		8E20810122E624A8004D6338 /* SelectionPickerViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionPickerViewDataSource.swift; sourceTree = "<group>"; };
+		8E20810322E62738004D6338 /* BasicSelectionPickerViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSelectionPickerViewDelegate.swift; sourceTree = "<group>"; };
 		8E21881522CA661A004947F8 /* MultipleOptionSelectionTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleOptionSelectionTableView.swift; sourceTree = "<group>"; };
 		8E21881722CA9126004947F8 /* MultipleOptionSelectionTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleOptionSelectionTableViewDataSource.swift; sourceTree = "<group>"; };
 		8E21881922CB2115004947F8 /* GenreListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreListViewModel.swift; sourceTree = "<group>"; };
@@ -83,6 +97,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8E20810022E62450004D6338 /* PickerView */ = {
+			isa = PBXGroup;
+			children = (
+				8E2080FE22E61F7E004D6338 /* BasicSelectionPickerView.swift */,
+				8E20810122E624A8004D6338 /* SelectionPickerViewDataSource.swift */,
+				8E20810322E62738004D6338 /* BasicSelectionPickerViewDelegate.swift */,
+			);
+			name = PickerView;
+			sourceTree = "<group>";
+		};
 		8E53515422C1429600F4A5DE = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +126,7 @@
 		8E53515F22C1429600F4A5DE /* MovieNight */ = {
 			isa = PBXGroup;
 			children = (
+				8E20810022E62450004D6338 /* PickerView */,
 				8E82405422C490F600A64B7B /* Endpoint */,
 				8E53516022C1429600F4A5DE /* AppDelegate.swift */,
 				8E53516222C1429600F4A5DE /* ViewController.swift */,
@@ -132,6 +157,10 @@
 				8E0A5DDE22D5B366006B15A5 /* ActorListViewModel.swift */,
 				8EDB593422E0C0AF0069AE1C /* ImageConfiguration.swift */,
 				8EDB593622E104020069AE1C /* ActorListImageOperation.swift */,
+				8E2080F422E4964E004D6338 /* CertificationResultList.swift */,
+				8E2080F622E4C1C6004D6338 /* CertificationListViewModel.swift */,
+				8E2080F822E5CE05004D6338 /* CertificationSelectionViewController.swift */,
+				8E2080FC22E5D325004D6338 /* SingleLabelDisplayView.swift */,
 			);
 			path = MovieNight;
 			sourceTree = "<group>";
@@ -218,8 +247,13 @@
 				8EDB593522E0C0AF0069AE1C /* ImageConfiguration.swift in Sources */,
 				8E21881A22CB2115004947F8 /* GenreListViewModel.swift in Sources */,
 				8ED7668A22CDC0110077AF57 /* SelectionAttribute.swift in Sources */,
+				8E2080F522E4964E004D6338 /* CertificationResultList.swift in Sources */,
+				8E2080FA22E5CE05004D6338 /* CertificationSelectionViewController.swift in Sources */,
+				8E20810422E62738004D6338 /* BasicSelectionPickerViewDelegate.swift in Sources */,
+				8E2080FF22E61F7E004D6338 /* BasicSelectionPickerView.swift in Sources */,
 				8E53517322C3861100F4A5DE /* Genre.swift in Sources */,
 				8E53516322C1429600F4A5DE /* ViewController.swift in Sources */,
+				8E20810222E624A8004D6338 /* SelectionPickerViewDataSource.swift in Sources */,
 				8E0A5DDF22D5B366006B15A5 /* ActorListViewModel.swift in Sources */,
 				8EF2DDDF22C6AC3700FA27D7 /* GenreResultList.swift in Sources */,
 				8EF2DDDD22C68E7A00FA27D7 /* MovieNightAPIError.swift in Sources */,
@@ -229,7 +263,9 @@
 				8EF2DDDB22C68DCE00FA27D7 /* MovieNightAPI.swift in Sources */,
 				8E53517522C38A0A00F4A5DE /* URLCreator.swift in Sources */,
 				8E43D37C22D3BBDA00BBE3D5 /* TableViewSectionInfo.swift in Sources */,
+				8E2080FD22E5D325004D6338 /* SingleLabelDisplayView.swift in Sources */,
 				8E53516122C1429600F4A5DE /* AppDelegate.swift in Sources */,
+				8E2080F722E4C1C6004D6338 /* CertificationListViewModel.swift in Sources */,
 				8ECBC1C322CFCDDC0031B594 /* AccessorySwitchView.swift in Sources */,
 				8E21881622CA661A004947F8 /* MultipleOptionSelectionTableView.swift in Sources */,
 				8E82405822C4973800A64B7B /* Certification.swift in Sources */,

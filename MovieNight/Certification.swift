@@ -9,9 +9,29 @@
 import Foundation
 
 
-struct Certification {
+struct Certification: Decodable {
+    
     let country: String
     let name: String
     let meaning: String
     let order: Int
+    
+    
+    enum InnerCodingKey: String, CodingKey {
+        case country
+        case name = "certification"
+        case meaning
+        case order
+    }
+    
+    
+    init(from decoder: Decoder) throws {
+        
+        let container: KeyedDecodingContainer = try decoder.container(keyedBy: InnerCodingKey.self)
+        name = try container.decode(String.self, forKey: .name)
+        meaning = try container.decode(String.self, forKey: .meaning)
+        order = try container.decode(Int.self, forKey: .order)
+        country = decoder.codingPath[1].stringValue
+    }
+
 }

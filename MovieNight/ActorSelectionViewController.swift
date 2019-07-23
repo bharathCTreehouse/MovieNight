@@ -134,8 +134,13 @@ class ActorSelectionViewController: MovieNightViewController {
     
     
     @objc func nextButtonTapped(_ sender: UIBarButtonItem) {
+        
         tableView?.fetchAllSelectedObjects()
+        
+        let certiSelectionVC: CertificationSelectionViewController = CertificationSelectionViewController(withMovieCriteria: self.movieCriteria)
+        self.navigationController?.pushViewController(certiSelectionVC, animated: true)
     }
+    
     
     
     deinit {
@@ -210,6 +215,7 @@ extension ActorSelectionViewController {
             if imageURL == nil {
                 continue
             }
+            
             
             let imageOperation: ActorListImageOperation =  ActorListImageOperation(withActorListViewModel: viewModel!, uniqueIdentifier: index, url: imageURL!, actorFetchType: fetchType, completionHandler: { (identifier: Int?, fetchType: ActorFetchType, error: Error?) -> Void in
                 

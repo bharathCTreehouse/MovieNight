@@ -83,6 +83,30 @@ class MovieNightAPI {
             }
         })
         
+    }
+    
+    
+    
+    func fetchAllCertifications(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([String: [Certification]]?, Error?) -> ()) {
+        
+        
+        fetchData(forEndPoint: endPoint, completionHandler: { (data: Data?, error: Error?) -> () in
+            
+            if let error = error {
+                handler(nil, error)
+            }
+            else {
+                if let data = data {
+                    let jsonDecoder: JSONDecoder = JSONDecoder()
+                    let certificationResultList: CertificationResultList = try! jsonDecoder.decode(CertificationResultList.self, from: data)
+                    handler(certificationResultList.allCertifications, nil)
+                }
+                else {
+                    handler(nil, error)
+                }
+            }
+        })
+        
         
     }
     
