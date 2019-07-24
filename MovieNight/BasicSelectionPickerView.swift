@@ -38,27 +38,25 @@ class BasicSelectionPickerView: UIPickerView {
         }
     }
     
+    var selectionCompletionHandler: ((Int, Int) -> Void)?
     
-    init(withDelegate delegate: BasicSelectionPickerViewDelegate) {
+    
+    
+    init(withData data: [pickerViewComponent: [String]], completionHandler handler: ((Int, Int) -> Void)? ) {
         
+        selectionCompletionHandler = handler
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
-        update(withDelegate: delegate)
+        update(withData: data)
     }
     
     
     
-    func update(withDelegate delegate: BasicSelectionPickerViewDelegate) {
-        pickerDelegate = delegate
+    func update(withData data: [pickerViewComponent: [String]]) {
+        pickerDelegate = BasicSelectionPickerViewDelegate(withData: data, changeResponderDelegate: self)
     }
     
     
-    func update(withRawData data: [pickerViewComponent: [String]], changeResponderDelegate delegate: BasicSelectionPickerViewChangeResponder?) {
-
-        update(withDelegate: BasicSelectionPickerViewDelegate(withData: data, changeResponderDelegate: delegate))
-    }
-
-   
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -69,5 +67,17 @@ class BasicSelectionPickerView: UIPickerView {
         pickerDataSource = nil
         pickerDelegate = nil
     }
+    
+}
+
+
+
+extension BasicSelectionPickerView: BasicSelectionPickerViewChangeResponder {
+    
+    
+    func didSelectRow(_ row: Int, inComponent component: Int) {
+        selectionCompletionHandler?(component, row)
+    }
+    
     
 }

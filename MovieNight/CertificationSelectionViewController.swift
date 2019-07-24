@@ -14,7 +14,6 @@ class CertificationSelectionViewController: MovieNightViewController {
     var certificationDescriptionView: SingleLabelDisplayView? = nil
     var certificationPickerView: BasicSelectionPickerView? = nil
     var countryChangeButton: UIButton? = nil
-    
     var allCertificationData: [String: [Certification]] = [:]
     
     var currentlyDisplayedList: [Certification] = [] {
@@ -22,7 +21,7 @@ class CertificationSelectionViewController: MovieNightViewController {
         didSet {
             
             let names: [String] = currentlyDisplayedList.compactMap({ return $0.name })
-            certificationPickerView!.update(withDelegate: BasicSelectionPickerViewDelegate(withData: [0: names], changeResponderDelegate: self))
+            certificationPickerView!.update(withData: [0: names])
             
             if names.isEmpty == false {
                 
@@ -74,7 +73,12 @@ class CertificationSelectionViewController: MovieNightViewController {
         
         
         //Certification picker view
-        certificationPickerView = BasicSelectionPickerView(withDelegate: BasicSelectionPickerViewDelegate(withData: [0: []], changeResponderDelegate: self))
+        certificationPickerView = BasicSelectionPickerView(withData: [0: []], completionHandler: { [unowned self] (component: Int, row: Int) -> Void in
+            
+            //Update meaning
+            let meaningViewModel: CertificationListViewModel = CertificationListViewModel(withCertification: self.currentlyDisplayedList[row], attributeType: .meaning)
+            self.certificationDescriptionView!.update(withData: meaningViewModel)
+        })
         certificationPickerView!.backgroundColor = UIColor.groupTableViewBackground
         view.addSubview(certificationPickerView!)
         certificationPickerView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -170,18 +174,5 @@ extension CertificationSelectionViewController {
         })
     }
     
-}
-
-
-
-extension CertificationSelectionViewController: BasicSelectionPickerViewChangeResponder {
-    
-    
-    func didSelectRow(_ row: Int, inComponent component: Int) {
-        
-        //Update meaning
-        let meaningViewModel: CertificationListViewModel = CertificationListViewModel(withCertification: currentlyDisplayedList[row], attributeType: .meaning)
-        self.certificationDescriptionView!.update(withData: meaningViewModel)
-    }
 }
 
