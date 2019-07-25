@@ -61,7 +61,7 @@ extension CertificationListViewModel: SingleLabelDisplayable {
     var textAttribute: TextWithAttribute {
         
         switch self.attributeType {
-            case .country: return TextWithAttribute(text: certification.country, font: UIFont.boldSystemFont(ofSize: 17.0), color: UIColor.red)
+            case .country: return TextWithAttribute(text: certification.country.fullCountryString!, font: UIFont.boldSystemFont(ofSize: 17.0), color: UIColor.red)
             case .meaning: return TextWithAttribute(text: certification.meaning, font: UIFont.systemFont(ofSize: 15.0), color: UIColor.red)
         }
     }

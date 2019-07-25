@@ -40,6 +40,9 @@
 		8ED7668C22CDC4080077AF57 /* GenreSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7668B22CDC4080077AF57 /* GenreSelectionViewController.swift */; };
 		8EDB593522E0C0AF0069AE1C /* ImageConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDB593422E0C0AF0069AE1C /* ImageConfiguration.swift */; };
 		8EDB593722E104020069AE1C /* ActorListImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDB593622E104020069AE1C /* ActorListImageOperation.swift */; };
+		8EDB614522EA252B00F4ECFC /* StringUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDB614422EA252B00F4ECFC /* StringUtilities.swift */; };
+		8EDB614722EA28F000F4ECFC /* CountryCodeMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDB614622EA28F000F4ECFC /* CountryCodeMapper.swift */; };
+		8EDB614922EA399200F4ECFC /* CountryPickerAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDB614822EA399200F4ECFC /* CountryPickerAlertAction.swift */; };
 		8EF2DDDB22C68DCE00FA27D7 /* MovieNightAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF2DDDA22C68DCE00FA27D7 /* MovieNightAPI.swift */; };
 		8EF2DDDD22C68E7A00FA27D7 /* MovieNightAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF2DDDC22C68E7A00FA27D7 /* MovieNightAPIError.swift */; };
 		8EF2DDDF22C6AC3700FA27D7 /* GenreResultList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF2DDDE22C6AC3700FA27D7 /* GenreResultList.swift */; };
@@ -81,6 +84,9 @@
 		8ED7668B22CDC4080077AF57 /* GenreSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreSelectionViewController.swift; sourceTree = "<group>"; };
 		8EDB593422E0C0AF0069AE1C /* ImageConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConfiguration.swift; sourceTree = "<group>"; };
 		8EDB593622E104020069AE1C /* ActorListImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorListImageOperation.swift; sourceTree = "<group>"; };
+		8EDB614422EA252B00F4ECFC /* StringUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtilities.swift; sourceTree = "<group>"; };
+		8EDB614622EA28F000F4ECFC /* CountryCodeMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeMapper.swift; sourceTree = "<group>"; };
+		8EDB614822EA399200F4ECFC /* CountryPickerAlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryPickerAlertAction.swift; sourceTree = "<group>"; };
 		8EF2DDDA22C68DCE00FA27D7 /* MovieNightAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNightAPI.swift; sourceTree = "<group>"; };
 		8EF2DDDC22C68E7A00FA27D7 /* MovieNightAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNightAPIError.swift; sourceTree = "<group>"; };
 		8EF2DDDE22C6AC3700FA27D7 /* GenreResultList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreResultList.swift; sourceTree = "<group>"; };
@@ -161,6 +167,9 @@
 				8E2080F622E4C1C6004D6338 /* CertificationListViewModel.swift */,
 				8E2080F822E5CE05004D6338 /* CertificationSelectionViewController.swift */,
 				8E2080FC22E5D325004D6338 /* SingleLabelDisplayView.swift */,
+				8EDB614422EA252B00F4ECFC /* StringUtilities.swift */,
+				8EDB614622EA28F000F4ECFC /* CountryCodeMapper.swift */,
+				8EDB614822EA399200F4ECFC /* CountryPickerAlertAction.swift */,
 			);
 			path = MovieNight;
 			sourceTree = "<group>";
@@ -253,6 +262,7 @@
 				8E2080FF22E61F7E004D6338 /* BasicSelectionPickerView.swift in Sources */,
 				8E53517322C3861100F4A5DE /* Genre.swift in Sources */,
 				8E53516322C1429600F4A5DE /* ViewController.swift in Sources */,
+				8EDB614922EA399200F4ECFC /* CountryPickerAlertAction.swift in Sources */,
 				8E20810222E624A8004D6338 /* SelectionPickerViewDataSource.swift in Sources */,
 				8E0A5DDF22D5B366006B15A5 /* ActorListViewModel.swift in Sources */,
 				8EF2DDDF22C6AC3700FA27D7 /* GenreResultList.swift in Sources */,
@@ -269,10 +279,12 @@
 				8ECBC1C322CFCDDC0031B594 /* AccessorySwitchView.swift in Sources */,
 				8E21881622CA661A004947F8 /* MultipleOptionSelectionTableView.swift in Sources */,
 				8E82405822C4973800A64B7B /* Certification.swift in Sources */,
+				8EDB614722EA28F000F4ECFC /* CountryCodeMapper.swift in Sources */,
 				8E21881C22CB2667004947F8 /* TextWithAttribute.swift in Sources */,
 				8E82405622C4911100A64B7B /* Endpoint.swift in Sources */,
 				8ECBC1BF22CF1D5E0031B594 /* MovieNightViewController.swift in Sources */,
 				8ECBC1BD22CF1C200031B594 /* Actor.swift in Sources */,
+				8EDB614522EA252B00F4ECFC /* StringUtilities.swift in Sources */,
 				8E82405B22C53EDE00A64B7B /* ArrayUtilities.swift in Sources */,
 				8ED7668C22CDC4080077AF57 /* GenreSelectionViewController.swift in Sources */,
 				8E0A5DDD22D5257A006B15A5 /* ActorResultList.swift in Sources */,

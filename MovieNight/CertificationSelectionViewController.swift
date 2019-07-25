@@ -20,6 +20,7 @@ class CertificationSelectionViewController: MovieNightViewController {
         
         didSet {
             
+
             let names: [String] = currentlyDisplayedList.compactMap({ return $0.name })
             certificationPickerView!.update(withData: [0: names])
             
@@ -41,6 +42,7 @@ class CertificationSelectionViewController: MovieNightViewController {
             
             self.countryChangeButton!.isEnabled = true
             self.certificationPickerView!.selectRow(0, inComponent: 0, animated: false)
+            
         }
     }
     
@@ -62,7 +64,6 @@ class CertificationSelectionViewController: MovieNightViewController {
         
         self.view = UIView()
         self.view.backgroundColor = UIColor.white
-
         
         //Certification country view
         countryView = SingleLabelDisplayView(withData: nil)
@@ -70,6 +71,7 @@ class CertificationSelectionViewController: MovieNightViewController {
         countryView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         countryView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         countryView!.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
+        countryView!.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
         
         
         //Certification picker view
@@ -86,14 +88,6 @@ class CertificationSelectionViewController: MovieNightViewController {
         certificationPickerView!.topAnchor.constraint(equalTo: countryView!.bottomAnchor).isActive = true
         
         
-        //Certification description view
-        certificationDescriptionView = SingleLabelDisplayView(withData: nil)
-        view.addSubview(certificationDescriptionView!)
-        certificationDescriptionView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        certificationDescriptionView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        certificationDescriptionView!.topAnchor.constraint(equalTo: certificationPickerView!.bottomAnchor).isActive = true
-        
-        
         //Certification country change button
         countryChangeButton = UIButton(type: .system)
         countryChangeButton!.addTarget(self, action: #selector(changeCountryButtonTapped(_:)), for: .touchUpInside)
@@ -104,6 +98,17 @@ class CertificationSelectionViewController: MovieNightViewController {
         countryChangeButton!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         countryChangeButton!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         countryChangeButton!.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
+        countryChangeButton!.heightAnchor.constraint(equalToConstant: 55.0).isActive = true
+        
+        
+        //Certification description view
+        certificationDescriptionView = SingleLabelDisplayView(withData: nil)
+        view.addSubview(certificationDescriptionView!)
+        certificationDescriptionView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        certificationDescriptionView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        certificationDescriptionView!.topAnchor.constraint(equalTo: certificationPickerView!.bottomAnchor).isActive = true
+        certificationDescriptionView!.bottomAnchor.constraint(equalTo: countryChangeButton!.topAnchor).isActive = true
+        certificationDescriptionView!.changeMinimumScaleFactor(to: 0.4)
     }
     
     
@@ -133,13 +138,17 @@ extension CertificationSelectionViewController {
         
         for (country, _) in self.allCertificationData {
             
-            let action: UIAlertAction = UIAlertAction(title: country, style: .default, handler: { [unowned self] (action: UIAlertAction) -> Void in
+            guard let countryString = country.fullCountryString else {
+                continue
+            }
+            
+           let countryAction: CountryPickerAlertAction = CountryPickerAlertAction(withIdentifier: country, style: .default, actionTitle: countryString, handler: { [unowned self] (countryCodeString: String) -> Void in
                 
-                self.currentlyDisplayedList = self.allCertificationData[action.title!]!
-                
+                self.currentlyDisplayedList = self.allCertificationData[countryCodeString]!
+
             })
             
-            actionSheetController.addAction(action)
+            actionSheetController.addAction(countryAction.alertAction!)
         }
         
         present(actionSheetController, animated: true, completion: nil)
@@ -164,8 +173,8 @@ extension CertificationSelectionViewController {
                     
                     self.allCertificationData = certifications
                     
-                    //By default, display certifications for US.
-                    let list: [Certification]? = certifications["US"]
+                    //By default, display certifications for India.
+                    let list: [Certification]? = certifications[CountryCodeMapper.Country.USA.countryCode]
                     if let list = list {
                         self.currentlyDisplayedList = list
                     }

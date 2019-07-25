@@ -18,9 +18,9 @@ protocol SingleLabelDisplayable {
 
 class SingleLabelDisplayView: UIView {
     
-    var textLabel: UILabel? = nil
+    private var textLabel: UILabel? = nil
     
-    var data: SingleLabelDisplayable? {
+    private var data: SingleLabelDisplayable? {
         didSet {
             setupTextLabelIfRequired()
             textLabel?.font = data?.textAttribute.font
@@ -28,6 +28,7 @@ class SingleLabelDisplayView: UIView {
             textLabel?.textColor = data?.textAttribute.color
             textLabel?.textAlignment = data?.textAlignment ?? NSTextAlignment.natural
             self.backgroundColor = data?.backgroundColor
+
         }
     }
     
@@ -61,9 +62,13 @@ class SingleLabelDisplayView: UIView {
             textLabel!.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8.0).isActive = true
             textLabel!.topAnchor.constraint(equalTo: self.topAnchor, constant: 16.0).isActive = true
             textLabel!.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16.0).isActive = true
-
-
         }
+    }
+    
+    
+    func changeMinimumScaleFactor(to value: CGFloat) {
+        self.textLabel!.adjustsFontSizeToFitWidth = true
+        self.textLabel!.minimumScaleFactor = value
     }
     
     
