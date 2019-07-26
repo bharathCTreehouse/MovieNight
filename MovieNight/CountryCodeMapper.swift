@@ -48,11 +48,6 @@ class CountryCodeMapper {
             case .Portugal: return "PT"
             }
         }
-        
-        
-        /*func country(fromCode code: String) {
-            
-        }*/
     }
     
     private static let countryDictionary:[String: String] =

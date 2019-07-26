@@ -106,7 +106,30 @@ class MovieNightAPI {
                 }
             }
         })
+    }
+    
+    
+    
+    func fetchMovies(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Movie]?, Error?) -> ()) {
         
+        
+        fetchData(forEndPoint: endPoint, completionHandler: { (data: Data?, error: Error?) -> () in
+            
+            if let error = error {
+                handler(nil, error)
+            }
+            else {
+                if let data = data {
+                    let jsonDecoder: JSONDecoder = JSONDecoder()
+                    jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let movieList: MovieResultList = try! jsonDecoder.decode(MovieResultList.self, from: data)
+                    handler(movieList.results, nil)
+                }
+                else {
+                    handler(nil, error)
+                }
+            }
+        })
         
     }
     

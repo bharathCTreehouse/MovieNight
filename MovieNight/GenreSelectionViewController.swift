@@ -40,7 +40,7 @@ class GenreSelectionViewController: MovieNightViewController {
         
         tableView = MultipleOptionSelectionTableView(withData: [sectionInfo: allGenreViewModels], selectionHandler: { [unowned self] (selectedIDs: [String]) -> Void in
             
-            self.movieCriteria.addGenres(withIDs_: selectedIDs)
+            self.movieCriteria.addGenres(withIDs: selectedIDs)
             let actorSelectionVC: ActorSelectionViewController = ActorSelectionViewController(withMovieCriteria: self.movieCriteria)
             self.navigationController?.pushViewController(actorSelectionVC, animated: true)
         })
@@ -76,6 +76,7 @@ class GenreSelectionViewController: MovieNightViewController {
     
     @objc func backButtonTapped(_ sender: UIBarButtonItem) {
         self.movieCriteria.removeAllGenres()
+        self.movieCriteria.changeSelectionStatus(to: .unInitiated)
         navigationController?.popViewController(animated: true)
     }
     

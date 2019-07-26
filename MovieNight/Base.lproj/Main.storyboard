@@ -41,15 +41,32 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Px1-ha-6Pu">
+                                <rect key="frame" x="16" y="796" width="382" height="50"/>
+                                <color key="backgroundColor" red="0.77000000000000002" green="0.10199999999999999" blue="0.085999999999999993" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="vj3-FQ-1Kx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <state key="normal" title="View results">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="viewResultsButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bDw-rw-OiK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.77000000000000002" green="0.10199999999999999" blue="0.085999999999999993" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gVq-ke-KgX" secondAttribute="trailing" constant="16" id="026-tf-jMh"/>
                             <constraint firstItem="gVq-ke-KgX" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-20" id="5iO-qH-3yh"/>
                             <constraint firstItem="gVq-ke-KgX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="6Hm-Sg-u0E"/>
+                            <constraint firstItem="Px1-ha-6Pu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="BMO-As-VBd"/>
                             <constraint firstItem="2S1-22-5Iq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="HvR-bu-G8J"/>
                             <constraint firstItem="2S1-22-5Iq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Nhd-xj-EKv"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2S1-22-5Iq" secondAttribute="bottom" id="a2h-yS-w1C"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Px1-ha-6Pu" secondAttribute="bottom" constant="16" id="i8T-90-gb0"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Px1-ha-6Pu" secondAttribute="trailing" constant="16" id="jgf-ig-kR8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2S1-22-5Iq" secondAttribute="trailing" id="vHg-Eo-vlV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -59,6 +76,7 @@
                         <outlet property="backgroundMovieImageView" destination="2S1-22-5Iq" id="wgA-Dk-qxs"/>
                         <outlet property="firstPersonCriteriaSelectionButton" destination="VuT-79-kgO" id="0mD-iZ-zlK"/>
                         <outlet property="secondPersonCriteriaSelectionButton" destination="nw2-LR-96G" id="yRt-Mn-AwM"/>
+                        <outlet property="viewResultsButton" destination="Px1-ha-6Pu" id="U5n-Ym-vRB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

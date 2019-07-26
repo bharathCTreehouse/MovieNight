@@ -80,7 +80,7 @@ class ActorSelectionViewController: MovieNightViewController {
         
         tableView = MultipleOptionSelectionTableView(withData: [searchSectionInfo: searchedActorsViewModel, popularSectionInfo: popularActorsViewModel], tableViewRowHeight: 90.0, selectionHandler: { [unowned self] (selectedIDs: [String]) -> Void in
             
-            self.movieCriteria.addActors(withIDs_: selectedIDs)
+            self.movieCriteria.addActors(withIDs: selectedIDs)
             
         })
         

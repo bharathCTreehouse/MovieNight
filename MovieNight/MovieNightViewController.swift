@@ -22,7 +22,7 @@ class MovieNightViewController: UIViewController {
     
     
     required init?(coder aDecoder: NSCoder) {
-        movieCriteria = MovieCriteria(withGenres: [], actors: nil, certification: nil)
+        movieCriteria = MovieCriteria(withGenres: [], actors: nil, certifications: nil)
         super.init(coder: aDecoder)
     }
 }

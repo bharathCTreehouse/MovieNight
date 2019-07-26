@@ -33,5 +33,15 @@ struct Certification: Decodable {
         order = try container.decode(Int.self, forKey: .order)
         country = decoder.codingPath[1].stringValue
     }
+    
+    
+    
+    init(withCountry country: String) {
+        
+        self.country = country
+        name = "None"
+        meaning = ""
+        order = -1
+    }
 
 }

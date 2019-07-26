@@ -50,7 +50,6 @@ class CertificationSelectionViewController: MovieNightViewController {
     
     override init(withMovieCriteria criteria: MovieCriteria) {
         super.init(withMovieCriteria: criteria)
-        fetchCertifications()
     }
     
     
@@ -81,7 +80,7 @@ class CertificationSelectionViewController: MovieNightViewController {
             let meaningViewModel: CertificationListViewModel = CertificationListViewModel(withCertification: self.currentlyDisplayedList[row], attributeType: .meaning)
             self.certificationDescriptionView!.update(withData: meaningViewModel)
         })
-        certificationPickerView!.backgroundColor = UIColor.groupTableViewBackground
+        certificationPickerView!.backgroundColor = UIColor.lightGray
         view.addSubview(certificationPickerView!)
         certificationPickerView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         certificationPickerView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -93,6 +92,7 @@ class CertificationSelectionViewController: MovieNightViewController {
         countryChangeButton!.addTarget(self, action: #selector(changeCountryButtonTapped(_:)), for: .touchUpInside)
         countryChangeButton!.isEnabled = false
         countryChangeButton!.translatesAutoresizingMaskIntoConstraints = false
+        countryChangeButton!.titleLabel?.font = UIFont.systemFont(ofSize: 19.0)
         countryChangeButton!.setTitle("Change certification country", for: .normal)
         view.addSubview(countryChangeButton!)
         countryChangeButton!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -113,7 +113,35 @@ class CertificationSelectionViewController: MovieNightViewController {
     
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        fetchCertifications()
+
+        
+        self.title = "Select certification"
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextButtonTapped(_:)))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonTapped(_:)))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+    }
+    
+    
+    @objc func backButtonTapped(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
+    @objc func nextButtonTapped(_ sender: UIButton) {
+        
+        self.movieCriteria.changeSelectionStatus(to: .completed)
+        let rowSelected: Int = self.certificationPickerView!.selectedRow(inComponent: 0)
+        let certification: Certification = self.currentlyDisplayedList[rowSelected]
+        if certification.order > 0 {
+            self.movieCriteria.addCertification(certification)
+        }
+        self.navigationController?.popToRootViewController(animated: true)
     }
     
     
@@ -143,8 +171,10 @@ extension CertificationSelectionViewController {
             }
             
            let countryAction: CountryPickerAlertAction = CountryPickerAlertAction(withIdentifier: country, style: .default, actionTitle: countryString, handler: { [unowned self] (countryCodeString: String) -> Void in
-                
-                self.currentlyDisplayedList = self.allCertificationData[countryCodeString]!
+            
+                var list: [Certification] = self.allCertificationData[countryCodeString]!
+                list.insert(Certification(withCountry: list.first!.country), at: 0)
+                self.currentlyDisplayedList = list
 
             })
             
@@ -174,8 +204,9 @@ extension CertificationSelectionViewController {
                     self.allCertificationData = certifications
                     
                     //By default, display certifications for India.
-                    let list: [Certification]? = certifications[CountryCodeMapper.Country.USA.countryCode]
-                    if let list = list {
+                    let list: [Certification]? = certifications[CountryCodeMapper.Country.India.countryCode]
+                    if var list = list {
+                        list.insert(Certification(withCountry: list.first!.country), at: 0)
                         self.currentlyDisplayedList = list
                     }
                 }
