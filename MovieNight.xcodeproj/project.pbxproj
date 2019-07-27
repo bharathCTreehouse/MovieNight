@@ -48,6 +48,8 @@
 		8EDB614922EA399200F4ECFC /* CountryPickerAlertAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDB614822EA399200F4ECFC /* CountryPickerAlertAction.swift */; };
 		8EDB614B22EB35FB00F4ECFC /* ButtonUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDB614A22EB35FB00F4ECFC /* ButtonUtilities.swift */; };
 		8EDB614D22EB5ABC00F4ECFC /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDB614C22EB5ABC00F4ECFC /* MovieListViewController.swift */; };
+		8EEEBDC922EC669E00A1F5CE /* SetUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEEBDC822EC669E00A1F5CE /* SetUtilities.swift */; };
+		8EEEBDCB22EC699100A1F5CE /* CollectionQueryItemConfigurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEEBDCA22EC699100A1F5CE /* CollectionQueryItemConfigurer.swift */; };
 		8EF2DDDB22C68DCE00FA27D7 /* MovieNightAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF2DDDA22C68DCE00FA27D7 /* MovieNightAPI.swift */; };
 		8EF2DDDD22C68E7A00FA27D7 /* MovieNightAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF2DDDC22C68E7A00FA27D7 /* MovieNightAPIError.swift */; };
 		8EF2DDDF22C6AC3700FA27D7 /* GenreResultList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF2DDDE22C6AC3700FA27D7 /* GenreResultList.swift */; };
@@ -97,6 +99,8 @@
 		8EDB614822EA399200F4ECFC /* CountryPickerAlertAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryPickerAlertAction.swift; sourceTree = "<group>"; };
 		8EDB614A22EB35FB00F4ECFC /* ButtonUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonUtilities.swift; sourceTree = "<group>"; };
 		8EDB614C22EB5ABC00F4ECFC /* MovieListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewController.swift; sourceTree = "<group>"; };
+		8EEEBDC822EC669E00A1F5CE /* SetUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUtilities.swift; sourceTree = "<group>"; };
+		8EEEBDCA22EC699100A1F5CE /* CollectionQueryItemConfigurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionQueryItemConfigurer.swift; sourceTree = "<group>"; };
 		8EF2DDDA22C68DCE00FA27D7 /* MovieNightAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNightAPI.swift; sourceTree = "<group>"; };
 		8EF2DDDC22C68E7A00FA27D7 /* MovieNightAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNightAPIError.swift; sourceTree = "<group>"; };
 		8EF2DDDE22C6AC3700FA27D7 /* GenreResultList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreResultList.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 				8E609D5322EB786D009E3019 /* MovieListViewModel.swift */,
 				8E609D5522EB7905009E3019 /* Movie.swift */,
 				8E609D5722EB7AF2009E3019 /* MovieResultList.swift */,
+				8EEEBDC822EC669E00A1F5CE /* SetUtilities.swift */,
 			);
 			path = MovieNight;
 			sourceTree = "<group>";
@@ -193,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				8E82405522C4911100A64B7B /* Endpoint.swift */,
+				8EEEBDCA22EC699100A1F5CE /* CollectionQueryItemConfigurer.swift */,
 			);
 			path = Endpoint;
 			sourceTree = "<group>";
@@ -291,6 +297,7 @@
 				8ECBC1C122CF31D90031B594 /* ActorSelectionViewController.swift in Sources */,
 				8ECBC1BB22CF1AA50031B594 /* MovieCriteria.swift in Sources */,
 				8EF2DDDB22C68DCE00FA27D7 /* MovieNightAPI.swift in Sources */,
+				8EEEBDC922EC669E00A1F5CE /* SetUtilities.swift in Sources */,
 				8E53517522C38A0A00F4A5DE /* URLCreator.swift in Sources */,
 				8E43D37C22D3BBDA00BBE3D5 /* TableViewSectionInfo.swift in Sources */,
 				8E2080FD22E5D325004D6338 /* SingleLabelDisplayView.swift in Sources */,
@@ -300,6 +307,7 @@
 				8E21881622CA661A004947F8 /* MultipleOptionSelectionTableView.swift in Sources */,
 				8E82405822C4973800A64B7B /* Certification.swift in Sources */,
 				8EDB614722EA28F000F4ECFC /* CountryCodeMapper.swift in Sources */,
+				8EEEBDCB22EC699100A1F5CE /* CollectionQueryItemConfigurer.swift in Sources */,
 				8E21881C22CB2667004947F8 /* TextWithAttribute.swift in Sources */,
 				8E82405622C4911100A64B7B /* Endpoint.swift in Sources */,
 				8ECBC1BF22CF1D5E0031B594 /* MovieNightViewController.swift in Sources */,

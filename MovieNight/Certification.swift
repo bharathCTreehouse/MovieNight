@@ -45,3 +45,8 @@ struct Certification: Decodable {
     }
 
 }
+
+
+extension Certification: Hashable {
+    
+}

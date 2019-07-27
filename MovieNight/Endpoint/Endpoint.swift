@@ -15,7 +15,7 @@ enum Endpoint: URLCreator {
     case fetchPopularActors
     case fetchActor(name: String)
     case fetchCertifications
-    case fetchMovie(genreIDs: [String], actorIDs: [String]?, certification: Certification?)
+    case fetchMovie(genres: CollectionQueryItemConfigurer, actors: CollectionQueryItemConfigurer?, certification: Certification?)
     case fetchImageConfiguration
     
     var path: String {
@@ -38,11 +38,11 @@ enum Endpoint: URLCreator {
             
             case let .fetchActor(name: actorName): items.append(URLQueryItem(name: "query", value: actorName))
             
-            case let .fetchMovie(genreIDs: genresToFetch, actorIDs: actorsIdsToFetch, certification: certi):
+            case let .fetchMovie(genres: genreConfigurer, actors: actorConfigurer, certification: certi):
                 
-                items.append(URLQueryItem(name: "with_genres", value: genresToFetch.commaSeparatedItems))
-                if let actorsIdsToFetch = actorsIdsToFetch {
-                    items.append(URLQueryItem(name: "with_people", value: actorsIdsToFetch.commaSeparatedItems))
+                items.append(URLQueryItem(name: "with_genres", value: genreConfigurer.combinedParameterString))
+                if let actorConfigurer = actorConfigurer {
+                    items.append(URLQueryItem(name: "with_people", value: actorConfigurer.combinedParameterString))
                 }
                 if let certi = certi {
                     items.append(URLQueryItem(name: "certification_country", value: certi.country))

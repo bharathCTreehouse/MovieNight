@@ -32,9 +32,9 @@ class MovieCriteria {
     
     typealias CriteriaCompletionCount = Int
     
-    private(set) var genres: [String]
-    private(set) var actors: [String]?
-    private(set) var certifications: [Certification]?
+    private(set) var genres: Set<String>
+    private(set) var actors: Set<String>?
+    private(set) var certifications: Set<Certification>?
     private(set) var criteriaSelectionStatus: MovieCriteriaSelectionStatus {
         didSet {
             if criteriaSelectionStatus == .completed {
@@ -46,7 +46,7 @@ class MovieCriteria {
     private (set) var currentPerson: Person = .unknown
     
     
-    init(withGenres genres: [String], actors: [String]?, certifications: [Certification]?, selectionStatus status: MovieCriteriaSelectionStatus = .unInitiated) {
+    init(withGenres genres: Set<String>, actors: Set<String>?, certifications: Set<Certification>?, selectionStatus status: MovieCriteriaSelectionStatus = .unInitiated) {
         
         self.genres = genres
         self.actors = actors
@@ -59,7 +59,7 @@ class MovieCriteria {
         if actors == nil {
             actors = []
         }
-        actors!.append(contentsOf: actorsToBeAdded)
+        actors = actors!.union(actorsToBeAdded)
     }
     func removeAllActors() {
         actors?.removeAll()
@@ -68,7 +68,7 @@ class MovieCriteria {
     
     
     func addGenres(withIDs genresToBeAdded: [String]) {
-        genres.append(contentsOf: genresToBeAdded)
+        genres = genres.union(genresToBeAdded)
     }
     func removeAllGenres() {
         genres.removeAll()
@@ -79,7 +79,7 @@ class MovieCriteria {
         if certifications == nil {
             certifications = []
         }
-        certifications!.append(certification)
+        certifications!.insert(certification)
     }
     func removeAllCertifications() {
         certifications?.removeAll()

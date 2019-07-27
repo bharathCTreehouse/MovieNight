@@ -26,3 +26,18 @@ struct Movie: Decodable {
     let releaseDate: String
     
 }
+
+extension Movie: Equatable {
+    
+    static func == (lhs: Movie, rhs: Movie) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
+
+
+extension Movie: Hashable {
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
+    }
+}
