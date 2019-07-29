@@ -39,11 +39,11 @@ extension MovieListViewModel: Hashable {
 extension MovieListViewModel: TextWithSubtTitleDisplayable {
     
     var textAttribute: TextWithAttribute {
-        return TextWithAttribute(text: movie.title, font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize), color: UIColor.black)
+        return TextWithAttribute(text: movie.title, font: UIFont.boldSystemFont(ofSize: 18.0), color: UIColor.black)
     }
     
     var subTitleTextAttribute: TextWithAttribute {
-         return TextWithAttribute(text: movie.originalTitle, font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize), color: UIColor.darkGray)
+         return TextWithAttribute(text: movie.originalTitle, font: UIFont.boldSystemFont(ofSize: 17.0), color: UIColor.darkGray)
     }
     
     var contentImage: UIImage? {

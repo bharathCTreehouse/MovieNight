@@ -15,10 +15,10 @@ class MovieListViewController: MovieNightViewController {
     var tableView: TextWithSubtTitleTableView? = nil
     let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
     
-    var movies: Set<Movie> = [] {
+    var movies: NSOrderedSet = [] {
         didSet {
             //Create view model for each movie object.
-            self.moviesListViewModels = movies.compactMap({ return MovieListViewModel(withMovie: $0)})
+            self.moviesListViewModels = movies.compactMap({ return MovieListViewModel(withMovie: $0 as! Movie)})
         }
     }
     var moviesListViewModels: [MovieListViewModel] = [] {
@@ -117,8 +117,11 @@ extension MovieListViewController {
             }
             else {
                 if let movies = movies {
-                    print("Movies: \(movies)")
-                    self.movies = self.movies.union(movies)
+                    
+                    let existingSet: NSMutableOrderedSet = NSMutableOrderedSet.init(orderedSet: self.movies)
+                    existingSet.addObjects(from: movies)
+                    self.movies = existingSet
+                    
                 }
             }
         })
