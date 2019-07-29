@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C2FB8EF22ED6B4B002E8344 /* MovieListPosterImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2FB8EE22ED6B4B002E8344 /* MovieListPosterImageOperation.swift */; };
+		4C5D2E8B22ED3AD100DD4451 /* TextWithSubtTitleTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5D2E8A22ED3AD100DD4451 /* TextWithSubtTitleTableViewDataSource.swift */; };
+		4C5D2E8D22ED3B8000DD4451 /* TextWithSubtTitleTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5D2E8C22ED3B8000DD4451 /* TextWithSubtTitleTableView.swift */; };
 		8E0A5DDD22D5257A006B15A5 /* ActorResultList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A5DDC22D5257A006B15A5 /* ActorResultList.swift */; };
 		8E0A5DDF22D5B366006B15A5 /* ActorListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A5DDE22D5B366006B15A5 /* ActorListViewModel.swift */; };
 		8E2080F522E4964E004D6338 /* CertificationResultList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2080F422E4964E004D6338 /* CertificationResultList.swift */; };
@@ -56,6 +59,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C2FB8EE22ED6B4B002E8344 /* MovieListPosterImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListPosterImageOperation.swift; sourceTree = "<group>"; };
+		4C5D2E8A22ED3AD100DD4451 /* TextWithSubtTitleTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithSubtTitleTableViewDataSource.swift; sourceTree = "<group>"; };
+		4C5D2E8C22ED3B8000DD4451 /* TextWithSubtTitleTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithSubtTitleTableView.swift; sourceTree = "<group>"; };
 		8E0A5DDC22D5257A006B15A5 /* ActorResultList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorResultList.swift; sourceTree = "<group>"; };
 		8E0A5DDE22D5B366006B15A5 /* ActorListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorListViewModel.swift; sourceTree = "<group>"; };
 		8E2080F422E4964E004D6338 /* CertificationResultList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificationResultList.swift; sourceTree = "<group>"; };
@@ -190,6 +196,9 @@
 				8E609D5522EB7905009E3019 /* Movie.swift */,
 				8E609D5722EB7AF2009E3019 /* MovieResultList.swift */,
 				8EEEBDC822EC669E00A1F5CE /* SetUtilities.swift */,
+				4C5D2E8A22ED3AD100DD4451 /* TextWithSubtTitleTableViewDataSource.swift */,
+				4C5D2E8C22ED3B8000DD4451 /* TextWithSubtTitleTableView.swift */,
+				4C2FB8EE22ED6B4B002E8344 /* MovieListPosterImageOperation.swift */,
 			);
 			path = MovieNight;
 			sourceTree = "<group>";
@@ -275,6 +284,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8EDB593522E0C0AF0069AE1C /* ImageConfiguration.swift in Sources */,
+				4C2FB8EF22ED6B4B002E8344 /* MovieListPosterImageOperation.swift in Sources */,
 				8E21881A22CB2115004947F8 /* GenreListViewModel.swift in Sources */,
 				8ED7668A22CDC0110077AF57 /* SelectionAttribute.swift in Sources */,
 				8E2080F522E4964E004D6338 /* CertificationResultList.swift in Sources */,
@@ -308,8 +318,10 @@
 				8E82405822C4973800A64B7B /* Certification.swift in Sources */,
 				8EDB614722EA28F000F4ECFC /* CountryCodeMapper.swift in Sources */,
 				8EEEBDCB22EC699100A1F5CE /* CollectionQueryItemConfigurer.swift in Sources */,
+				4C5D2E8D22ED3B8000DD4451 /* TextWithSubtTitleTableView.swift in Sources */,
 				8E21881C22CB2667004947F8 /* TextWithAttribute.swift in Sources */,
 				8E82405622C4911100A64B7B /* Endpoint.swift in Sources */,
+				4C5D2E8B22ED3AD100DD4451 /* TextWithSubtTitleTableViewDataSource.swift in Sources */,
 				8ECBC1BF22CF1D5E0031B594 /* MovieNightViewController.swift in Sources */,
 				8ECBC1BD22CF1C200031B594 /* Actor.swift in Sources */,
 				8EDB614522EA252B00F4ECFC /* StringUtilities.swift in Sources */,

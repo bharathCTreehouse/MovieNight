@@ -12,10 +12,41 @@ import UIKit
 
 class MovieListViewController: MovieNightViewController {
     
+    var tableView: TextWithSubtTitleTableView? = nil
+    let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+    
+    var movies: Set<Movie> = [] {
+        didSet {
+            //Create view model for each movie object.
+            self.moviesListViewModels = movies.compactMap({ return MovieListViewModel(withMovie: $0)})
+        }
+    }
+    var moviesListViewModels: [MovieListViewModel] = [] {
+        didSet {
+            //Update the table view here.
+            tableView?.update(withData: moviesListViewModels)
+            
+            //Start fetching movie poster images.
+            //Find all view models without images.
+            let viewModelsWithoutImages: [MovieListViewModel] = moviesListViewModels.filter({ return $0.posterImage == nil})
+            fetchPosterImages(for: viewModelsWithoutImages)
+            
+        }
+    }
+    
+    
     
     override func loadView() {
+        
         self.view = UIView()
         self.view.backgroundColor = UIColor.white
+        
+        tableView = TextWithSubtTitleTableView(withData: moviesListViewModels)
+        view.addSubview(tableView!)
+        tableView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView!.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
+        tableView!.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor).isActive = true
     }
     
     
@@ -25,6 +56,27 @@ class MovieListViewController: MovieNightViewController {
         fetchMoviesBasedOnSelectedCriteria()
     }
     
+    
+   
+    deinit {
+        tableView = nil
+    }
+    
+}
+
+
+
+extension MovieListViewController {
+    
+    @objc func doneButtonTapped(_ sender: UIBarButtonItem) {
+        self.movieCriteria.reset()
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+
+
+extension MovieListViewController {
     
     func fetchMoviesBasedOnSelectedCriteria() {
         
@@ -57,7 +109,7 @@ class MovieListViewController: MovieNightViewController {
         
         
         let movieNightAPI: MovieNightAPI = MovieNightAPI()
-
+        
         movieNightAPI.fetchMovies(withEndPoint: Endpoint.fetchMovie(genres: genreConfig, actors: actorConfig, certification: certification), completionHandler: { (movies: [Movie]?, error: Error?) -> Void in
             
             if let error = error {
@@ -65,20 +117,48 @@ class MovieListViewController: MovieNightViewController {
             }
             else {
                 if let movies = movies {
-                    print("MOVIES: \(movies)")
+                    print("Movies: \(movies)")
+                    self.movies = self.movies.union(movies)
                 }
             }
         })
     }
-    
 }
 
 
 
 extension MovieListViewController {
     
-    @objc func doneButtonTapped(_ sender: UIBarButtonItem) {
-        self.movieCriteria.reset()
-        dismiss(animated: true, completion: nil)
+    
+    func fetchPosterImages(for viewModels: [MovieListViewModel]) {
+        
+        let imageOperationQueue: OperationQueue = OperationQueue.init()
+        
+        for (index,viewModel) in viewModels.enumerated() {
+            
+            let posterImagePath: String? = viewModel.movie.posterPath
+            if posterImagePath == nil {
+                continue
+            }
+            
+            let url: URL? = self.appDelegate?.imageConfiguration?.urlFor(imagePath: posterImagePath!, withImageCategory: ImageCategory.poster(.original))
+            
+            if let url = url {
+                
+                let imageOperation: MovieListPosterImageOperation = MovieListPosterImageOperation(withURL: url, identifier: index, movieListViewModel: viewModel, completionHandler: { [unowned self] (index: Int?, error: Error?) -> Void in
+                    
+                    if error == nil && index != nil {
+                        self.tableView?.reloadRows(at: [IndexPath.init(row: index!, section: 0)], with: .automatic)
+                    }
+                })
+                
+                imageOperationQueue.addOperation(imageOperation)
+            }
+            
+        }
+
     }
+    
 }
+
+
