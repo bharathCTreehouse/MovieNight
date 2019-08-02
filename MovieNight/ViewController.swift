@@ -129,6 +129,7 @@ extension ViewController {
         
         let movieListVC: MovieListViewController = MovieListViewController(withMovieCriteria: self.movieCriteria)
         let navController: UINavigationController = UINavigationController(rootViewController: movieListVC)
+        navController.navigationBar.barTintColor = UIColor.init(red: 196.0/155.0, green: 26.0/155.0, blue: 22.0/155.0, alpha: 1.0)
         
         present(navController, animated: true, completion: nil)
         

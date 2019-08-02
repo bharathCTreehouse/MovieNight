@@ -42,7 +42,7 @@ enum Endpoint: URLCreator {
                 
                 items.append(URLQueryItem(name: "with_genres", value: genreConfigurer.combinedParameterString))
                 if let actorConfigurer = actorConfigurer {
-                    items.append(URLQueryItem(name: "with_people", value: actorConfigurer.combinedParameterString))
+                    items.append(URLQueryItem(name: "with_cast", value: actorConfigurer.combinedParameterString))
                 }
                 if let certi = certi {
                     items.append(URLQueryItem(name: "certification_country", value: certi.country))

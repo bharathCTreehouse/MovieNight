@@ -128,7 +128,7 @@ class CertificationSelectionViewController: MovieNightViewController {
     }
     
     
-    @objc func backButtonTapped(_ sender: UIButton) {
+    @objc func backButtonTapped(_ sender: UIBarButtonItem) {
         navigationController?.popViewController(animated: true)
     }
     
@@ -137,9 +137,11 @@ class CertificationSelectionViewController: MovieNightViewController {
         
         self.movieCriteria.changeSelectionStatus(to: .completed)
         let rowSelected: Int = self.certificationPickerView!.selectedRow(inComponent: 0)
-        let certification: Certification = self.currentlyDisplayedList[rowSelected]
-        if certification.order > 0 {
-            self.movieCriteria.addCertification(certification)
+        if rowSelected != NSNotFound && rowSelected < currentlyDisplayedList.count {
+            let certification: Certification = self.currentlyDisplayedList[rowSelected]
+            if certification.order > 0 {
+                self.movieCriteria.addCertification(certification)
+            }
         }
         self.navigationController?.popToRootViewController(animated: true)
     }

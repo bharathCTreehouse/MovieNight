@@ -14,7 +14,7 @@ class MovieNightAPI {
     func fetchAllGenres(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Genre]?, Error?) -> ()) {
         
         
-        fetchData(forEndPoint: endPoint, completionHandler: { (data: Data?, error: Error?) -> () in
+        fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
             
             if let error = error {
                 handler(nil, error)
@@ -40,7 +40,7 @@ class MovieNightAPI {
     func fetchActors(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Actor]?, Error?) -> ()) {
         
         
-        fetchData(forEndPoint: endPoint, completionHandler: { (data: Data?, error: Error?) -> () in
+        fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
             
             if let error = error {
                 handler(nil, error)
@@ -65,7 +65,7 @@ class MovieNightAPI {
     func fetchImageConfiguration(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping (ImageConfiguration?, Error?) -> ()) {
         
         
-        fetchData(forEndPoint: endPoint, completionHandler: { (data: Data?, error: Error?) -> () in
+        fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
             
             if let error = error {
                 handler(nil, error)
@@ -90,7 +90,7 @@ class MovieNightAPI {
     func fetchAllCertifications(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([String: [Certification]]?, Error?) -> ()) {
         
         
-        fetchData(forEndPoint: endPoint, completionHandler: { (data: Data?, error: Error?) -> () in
+        fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
             
             if let error = error {
                 handler(nil, error)
@@ -113,7 +113,7 @@ class MovieNightAPI {
     func fetchMovies(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Movie]?, Error?) -> ()) {
         
         
-        fetchData(forEndPoint: endPoint, completionHandler: { (data: Data?, error: Error?) -> () in
+        fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
             
             if let error = error {
                 handler(nil, error)
@@ -133,22 +133,46 @@ class MovieNightAPI {
         
     }
     
+    
+    
+    func fetchData(atUrl url: URL, completionHandler handler: @escaping (Data?, Error?) -> ()) {
+        
+        let urlRequest: URLRequest? = URLRequest(url: url)
+        
+        fetchData(forUrlRequest: urlRequest, completionHandler: { (data: Data?, error: Error?) -> Void in
+            
+            if let error = error {
+                handler(nil, error)
+            }
+            else {
+                if let data = data {
+                    handler(data, nil)
+                }
+                else {
+                    handler(nil, error)
+                }
+            }
+            
+        })
+    }
+    
 }
 
 
 extension MovieNightAPI {
     
     
-    private func fetchData(forEndPoint endPoint: URLCreator, completionHandler handler: @escaping (Data?, Error?) -> ()) {
+    private func fetchData(forUrlRequest urlRequest: URLRequest?, completionHandler handler: @escaping (Data?, Error?) -> ()) {
         
-        let urlSession: URLSession = URLSession.init(configuration: .default)
         
-        if endPoint.request == nil {
+        if urlRequest == nil {
             handler(nil, MovieNightAPIError.invalidRequest)
         }
         else {
             
-            let task = urlSession.dataTask(with: endPoint.request!, completionHandler: { (data: Data?, resp: URLResponse?, error: Error?) -> () in
+            let urlSession: URLSession = URLSession.init(configuration: .default)
+
+            let task = urlSession.dataTask(with: urlRequest!, completionHandler: { (data: Data?, resp: URLResponse?, error: Error?) -> () in
                 
                 
                 DispatchQueue.main.async {

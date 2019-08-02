@@ -28,6 +28,8 @@ class TextWithSubtTitleTableViewDataSource: NSObject, UITableViewDataSource {
     init(withData data: [TextWithSubtTitleDisplayable], tableView: UITableView) {
         self.data = data
         self.tableView = tableView
+        super.init()
+        self.tableView?.delegate = self
     }
     
     
@@ -69,5 +71,16 @@ class TextWithSubtTitleTableViewDataSource: NSObject, UITableViewDataSource {
         tableView = nil
     }
     
+    
+}
+
+extension TextWithSubtTitleTableViewDataSource: UITableViewDelegate {
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ShowMovieDetail"), object: nil, userInfo: ["IndexPath":indexPath])
+        
+    }
     
 }

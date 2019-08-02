@@ -51,9 +51,29 @@ class MovieListViewController: MovieNightViewController {
     
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped(_:)))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+
         fetchMoviesBasedOnSelectedCriteria()
+
+        
+        //Temp
+        NotificationCenter.default.addObserver(self, selector: #selector(showMovieDetail(_:)), name: NSNotification.Name(rawValue: "ShowMovieDetail"), object: nil)
+    }
+    
+    
+    
+    @objc func showMovieDetail(_ sender: Notification) {
+        
+        let selectedRow: Int? = (sender.userInfo?["IndexPath"] as? IndexPath)?.row
+        guard let row = selectedRow else {
+            return
+        }
+        let selectedMovie: Movie = movies[row] as! Movie
+        let movieDetailVC: MovieDetailViewController = MovieDetailViewController(withMovie: selectedMovie)
+        navigationController?.pushViewController(movieDetailVC, animated: true)
     }
     
     
@@ -117,6 +137,8 @@ extension MovieListViewController {
             }
             else {
                 if let movies = movies {
+                    
+                    print("Movies: \(movies)")
                     
                     let existingSet: NSMutableOrderedSet = NSMutableOrderedSet.init(orderedSet: self.movies)
                     existingSet.addObjects(from: movies)
