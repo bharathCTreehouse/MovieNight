@@ -44,7 +44,7 @@ class MovieDetailViewController: UIViewController {
         view.addSubview(movieDetailTableView!)
         movieDetailTableView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         movieDetailTableView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        movieDetailTableView!.topAnchor.constraint(equalTo: movieBackdropView!.backgroundView.bottomAnchor).isActive = true
+        movieDetailTableView!.topAnchor.constraint(equalTo: movieBackdropView!.bottomAnchor).isActive = true
         movieDetailTableView!.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     

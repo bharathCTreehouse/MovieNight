@@ -23,7 +23,6 @@ class MovieBackdropView: UIView {
     @IBOutlet weak var backdropImageView: UIImageView!
     @IBOutlet weak var noImageLabel: UILabel!
     weak var backdropView: UIView? = nil
-    @IBOutlet weak var backgroundView: UIView!
 
 
 
@@ -73,7 +72,6 @@ class MovieBackdropView: UIView {
         backdropImageView = nil
         noImageLabel = nil
         backdropView = nil
-        backgroundView = nil
     }
 }
 

@@ -12,10 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MovieBackdropView" customModule="MovieNight" customModuleProvider="target">
             <connections>
-                <outlet property="backdropImageView" destination="Ne5-Xf-YkD" id="zSM-XP-ATZ"/>
-                <outlet property="backgroundView" destination="Ul7-JL-33Z" id="TNx-1I-qnl"/>
-                <outlet property="loadingActivityView" destination="pUz-z0-h84" id="Z7E-yZ-BYo"/>
-                <outlet property="noImageLabel" destination="9JQ-Fj-rUb" id="OJG-uW-7D7"/>
+                <outlet property="backdropImageView" destination="Isd-cD-ufC" id="T8e-Yc-eu3"/>
+                <outlet property="loadingActivityView" destination="WiP-uX-vmR" id="tfq-23-ix4"/>
+                <outlet property="noImageLabel" destination="uiP-Jn-Use" id="q3m-EA-akf"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -23,43 +22,31 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ul7-JL-33Z">
-                    <rect key="frame" x="0.0" y="44" width="414" height="227"/>
-                    <subviews>
-                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="pUz-z0-h84">
-                            <rect key="frame" x="188.5" y="95" width="37" height="37"/>
-                        </activityIndicatorView>
-                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No image available" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9JQ-Fj-rUb">
-                            <rect key="frame" x="130.5" y="95" width="153" height="37"/>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                            <color key="textColor" red="0.77000000000000002" green="0.10199999999999999" blue="0.085999999999999993" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ne5-Xf-YkD">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="227"/>
-                        </imageView>
-                    </subviews>
-                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstItem="9JQ-Fj-rUb" firstAttribute="top" secondItem="Ul7-JL-33Z" secondAttribute="top" constant="95" id="8q2-HC-Hzb"/>
-                        <constraint firstItem="pUz-z0-h84" firstAttribute="centerX" secondItem="Ul7-JL-33Z" secondAttribute="centerX" id="HT1-2n-dXX"/>
-                        <constraint firstItem="pUz-z0-h84" firstAttribute="top" secondItem="Ul7-JL-33Z" secondAttribute="top" constant="95" id="NJt-IX-5G8"/>
-                        <constraint firstItem="9JQ-Fj-rUb" firstAttribute="centerX" secondItem="Ul7-JL-33Z" secondAttribute="centerX" id="Nyk-0N-7QY"/>
-                        <constraint firstItem="Ne5-Xf-YkD" firstAttribute="leading" secondItem="Ul7-JL-33Z" secondAttribute="leading" id="VrP-m3-dkA"/>
-                        <constraint firstAttribute="bottom" secondItem="pUz-z0-h84" secondAttribute="bottom" constant="95" id="Xuu-p6-Jdt"/>
-                        <constraint firstAttribute="bottom" secondItem="Ne5-Xf-YkD" secondAttribute="bottom" id="ZY8-Yt-58H"/>
-                        <constraint firstAttribute="trailing" secondItem="Ne5-Xf-YkD" secondAttribute="trailing" id="e5i-QZ-pHD"/>
-                        <constraint firstItem="Ne5-Xf-YkD" firstAttribute="top" secondItem="Ul7-JL-33Z" secondAttribute="top" id="eAb-4E-CUa"/>
-                        <constraint firstAttribute="bottom" secondItem="9JQ-Fj-rUb" secondAttribute="bottom" constant="95" id="pft-Jp-VVm"/>
-                    </constraints>
-                    <viewLayoutGuide key="safeArea" id="THG-16-L57"/>
-                </view>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="WiP-uX-vmR">
+                    <rect key="frame" x="188.5" y="139" width="37" height="628"/>
+                </activityIndicatorView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No image available" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uiP-Jn-Use">
+                    <rect key="frame" x="131" y="139" width="152" height="628"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <color key="textColor" red="0.77000000000000002" green="0.10199999999999999" blue="0.085999999999999993" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Isd-cD-ufC">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                </imageView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="Ul7-JL-33Z" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="QOE-HP-4y9"/>
-                <constraint firstItem="Ul7-JL-33Z" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="lvR-jy-xPM"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Ul7-JL-33Z" secondAttribute="trailing" id="mjE-nx-jww"/>
+                <constraint firstItem="WiP-uX-vmR" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="11J-bm-IHY"/>
+                <constraint firstItem="Isd-cD-ufC" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="5dC-wT-HWI"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="WiP-uX-vmR" secondAttribute="bottom" constant="95" id="Pnj-sr-lrh"/>
+                <constraint firstItem="uiP-Jn-Use" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="RLs-KF-EMM"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="uiP-Jn-Use" secondAttribute="bottom" constant="95" id="gP1-Ou-PNL"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Isd-cD-ufC" secondAttribute="bottom" id="jD1-Ak-8Vp"/>
+                <constraint firstItem="Isd-cD-ufC" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="kcL-c7-6sl"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="Isd-cD-ufC" secondAttribute="trailing" id="mMU-r9-UjV"/>
+                <constraint firstItem="uiP-Jn-Use" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="95" id="vmb-yJ-tCM"/>
+                <constraint firstItem="WiP-uX-vmR" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="95" id="zpC-ci-zcc"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
         </view>
