@@ -13,7 +13,8 @@ import UIKit
 protocol TextWithSubtTitleDisplayable: UniquelyIdentifiable {
     var textAttribute: TextWithAttribute { get }
     var subTitleTextAttribute: TextWithAttribute { get }
-    var contentImage: UIImage?{ get }
+    var contentImage: UIImage? { get }
+    var moreInfoButtonAttribute: ButtonAttribute? { get }
 }
 
 
@@ -22,14 +23,17 @@ protocol TextWithSubtTitleDisplayable: UniquelyIdentifiable {
 class TextWithSubtTitleTableViewDataSource: NSObject, UITableViewDataSource {
     
     var data: [TextWithSubtTitleDisplayable] = []
-    weak var tableView: UITableView? = nil
+    var accessoryViewTapHandler: ((IndexPath) -> Void)? = nil
+    var cellTapHandler: ((IndexPath) -> Void)? = nil
+
     
     
-    init(withData data: [TextWithSubtTitleDisplayable], tableView: UITableView) {
+    init(withData data: [TextWithSubtTitleDisplayable], accessoryActionHandler: ((IndexPath) -> Void)?, cellTapHandler: ((IndexPath) -> Void)?) {
+        
         self.data = data
-        self.tableView = tableView
+        accessoryViewTapHandler = accessoryActionHandler
+        self.cellTapHandler =  cellTapHandler
         super.init()
-        self.tableView?.delegate = self
     }
     
     
@@ -49,8 +53,21 @@ class TextWithSubtTitleTableViewDataSource: NSObject, UITableViewDataSource {
         if cell == nil {
             cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         }
+        cell!.textLabel?.numberOfLines = 0
+        cell!.detailTextLabel?.numberOfLines = 0
         
         let currentData: TextWithSubtTitleDisplayable = data[indexPath.row]
+        
+        if let buttonAttr = currentData.moreInfoButtonAttribute {
+            
+            let accessoryButton: UIButton = UIButton(type: buttonAttr.type)
+            accessoryButton.tag = indexPath.row
+            accessoryButton.setTitle(buttonAttr.title, for: .normal)
+            accessoryButton.addTarget(self, action: #selector(accessoryViewButtonTapped(_:)), for: .touchUpInside)
+        accessoryButton.setTitleColor(buttonAttr.titleColorForNormalState, for: .normal)
+            
+            cell!.accessoryView = accessoryButton
+        }
         cell?.textLabel?.text = currentData.textAttribute.text
         cell?.textLabel?.font = currentData.textAttribute.font
         cell?.textLabel?.textColor = currentData.textAttribute.color
@@ -68,7 +85,8 @@ class TextWithSubtTitleTableViewDataSource: NSObject, UITableViewDataSource {
     
     
     deinit {
-        tableView = nil
+        accessoryViewTapHandler = nil
+        cellTapHandler = nil
     }
     
     
@@ -79,8 +97,13 @@ extension TextWithSubtTitleTableViewDataSource: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "ShowMovieDetail"), object: nil, userInfo: ["IndexPath":indexPath])
-        
+        tableView.deselectRow(at: indexPath, animated: true)
+        cellTapHandler?(indexPath)
+    }
+    
+    
+    @objc func accessoryViewButtonTapped(_ sender: UIButton) {
+        accessoryViewTapHandler?(IndexPath(row: sender.tag, section: 0))
     }
     
 }

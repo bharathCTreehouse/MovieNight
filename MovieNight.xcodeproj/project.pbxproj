@@ -24,6 +24,8 @@
 		8E2080FF22E61F7E004D6338 /* BasicSelectionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2080FE22E61F7E004D6338 /* BasicSelectionPickerView.swift */; };
 		8E20810222E624A8004D6338 /* SelectionPickerViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20810122E624A8004D6338 /* SelectionPickerViewDataSource.swift */; };
 		8E20810422E62738004D6338 /* BasicSelectionPickerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20810322E62738004D6338 /* BasicSelectionPickerViewDelegate.swift */; };
+		8E21377922F5B47300C005DB /* ButtonAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21377822F5B47300C005DB /* ButtonAttribute.swift */; };
+		8E21377B22F61F2B00C005DB /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21377A22F61F2B00C005DB /* ImageViewController.swift */; };
 		8E21881622CA661A004947F8 /* MultipleOptionSelectionTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21881522CA661A004947F8 /* MultipleOptionSelectionTableView.swift */; };
 		8E21881822CA9126004947F8 /* MultipleOptionSelectionTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21881722CA9126004947F8 /* MultipleOptionSelectionTableViewDataSource.swift */; };
 		8E21881A22CB2115004947F8 /* GenreListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E21881922CB2115004947F8 /* GenreListViewModel.swift */; };
@@ -81,6 +83,8 @@
 		8E2080FE22E61F7E004D6338 /* BasicSelectionPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSelectionPickerView.swift; sourceTree = "<group>"; };
 		8E20810122E624A8004D6338 /* SelectionPickerViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionPickerViewDataSource.swift; sourceTree = "<group>"; };
 		8E20810322E62738004D6338 /* BasicSelectionPickerViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSelectionPickerViewDelegate.swift; sourceTree = "<group>"; };
+		8E21377822F5B47300C005DB /* ButtonAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAttribute.swift; sourceTree = "<group>"; };
+		8E21377A22F61F2B00C005DB /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		8E21881522CA661A004947F8 /* MultipleOptionSelectionTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleOptionSelectionTableView.swift; sourceTree = "<group>"; };
 		8E21881722CA9126004947F8 /* MultipleOptionSelectionTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleOptionSelectionTableViewDataSource.swift; sourceTree = "<group>"; };
 		8E21881922CB2115004947F8 /* GenreListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreListViewModel.swift; sourceTree = "<group>"; };
@@ -214,6 +218,8 @@
 				8E1C03D722F16920007FC2DE /* MovieDetailViewController.swift */,
 				8E1C03D922F16D2C007FC2DE /* MovieDetailViewModel.swift */,
 				8E09F7D422F4AE28005E7D68 /* MovieDetailTableView.swift */,
+				8E21377822F5B47300C005DB /* ButtonAttribute.swift */,
+				8E21377A22F61F2B00C005DB /* ImageViewController.swift */,
 			);
 			path = MovieNight;
 			sourceTree = "<group>";
@@ -305,6 +311,7 @@
 				8ED7668A22CDC0110077AF57 /* SelectionAttribute.swift in Sources */,
 				8E2080F522E4964E004D6338 /* CertificationResultList.swift in Sources */,
 				8E2080FA22E5CE05004D6338 /* CertificationSelectionViewController.swift in Sources */,
+				8E21377B22F61F2B00C005DB /* ImageViewController.swift in Sources */,
 				8E609D5422EB786D009E3019 /* MovieListViewModel.swift in Sources */,
 				8E20810422E62738004D6338 /* BasicSelectionPickerViewDelegate.swift in Sources */,
 				8E2080FF22E61F7E004D6338 /* BasicSelectionPickerView.swift in Sources */,
@@ -339,6 +346,7 @@
 				8E09F7D522F4AE28005E7D68 /* MovieDetailTableView.swift in Sources */,
 				4C5D2E8D22ED3B8000DD4451 /* TextWithSubtTitleTableView.swift in Sources */,
 				8E21881C22CB2667004947F8 /* TextWithAttribute.swift in Sources */,
+				8E21377922F5B47300C005DB /* ButtonAttribute.swift in Sources */,
 				8E82405622C4911100A64B7B /* Endpoint.swift in Sources */,
 				8E1C03DA22F16D2C007FC2DE /* MovieDetailViewModel.swift in Sources */,
 				4C5D2E8B22ED3AD100DD4451 /* TextWithSubtTitleTableViewDataSource.swift in Sources */,

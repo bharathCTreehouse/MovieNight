@@ -49,7 +49,10 @@ extension MovieDetailTableView: UITableViewDataSource {
         if cell == nil {
             cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         }
+        cell!.selectionStyle = .none
         cell!.detailTextLabel?.numberOfLines = 0
+        cell?.textLabel?.textColor = UIColor.gray
+        cell?.textLabel?.font = UIFont.boldSystemFont(ofSize: 18.0)
         
         var displayAttribute: TextWithAttribute? = nil
         

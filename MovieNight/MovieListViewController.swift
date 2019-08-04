@@ -41,7 +41,7 @@ class MovieListViewController: MovieNightViewController {
         self.view = UIView()
         self.view.backgroundColor = UIColor.white
         
-        tableView = TextWithSubtTitleTableView(withData: moviesListViewModels)
+        tableView = TextWithSubtTitleTableView(withData: moviesListViewModels, tableViewActionResponder: self)
         view.addSubview(tableView!)
         tableView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -53,35 +53,57 @@ class MovieListViewController: MovieNightViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        self.title = "Movie list"
+
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped(_:)))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
 
         fetchMoviesBasedOnSelectedCriteria()
-
-        
-        //Temp
-        NotificationCenter.default.addObserver(self, selector: #selector(showMovieDetail(_:)), name: NSNotification.Name(rawValue: "ShowMovieDetail"), object: nil)
     }
     
     
+    deinit {
+        tableView = nil
+    }
     
-    @objc func showMovieDetail(_ sender: Notification) {
+}
+
+extension MovieListViewController: TextWithSubTitleTableViewActionResponder {
+    
+    func accessoryInfoButtonTapped(atIndexPath indexPath: IndexPath) {
+        self.showMovieDetail(atIndex: indexPath.row)
+    }
+    
+    func tableViewCellTapped(atIndexPath indexPath: IndexPath) {
+        self.showMoviePosterImage(atIndexPath: indexPath)
+    }
+    
+    
+    func showMovieDetail(atIndex index: Int) {
         
-        let selectedRow: Int? = (sender.userInfo?["IndexPath"] as? IndexPath)?.row
-        guard let row = selectedRow else {
-            return
-        }
-        let selectedMovie: Movie = movies[row] as! Movie
+        let selectedMovie: Movie = movies[index] as! Movie
         let movieDetailVC: MovieDetailViewController = MovieDetailViewController(withMovie: selectedMovie)
         navigationController?.pushViewController(movieDetailVC, animated: true)
     }
     
     
-   
-    deinit {
-        tableView = nil
+    func showMoviePosterImage(atIndexPath indexPath: IndexPath) {
+        
+        let viewModel: MovieListViewModel = self.moviesListViewModels[indexPath.row]
+        if let posterImage = viewModel.contentImage {
+            let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: .main)
+            let imageVC: ImageViewController? = sb.instantiateViewController(withIdentifier: "ImgViewController") as? ImageViewController
+            
+            if let imageVC = imageVC {
+                imageVC.imageToDisplay = posterImage
+                let navController: UINavigationController = UINavigationController(rootViewController: imageVC)
+                navController.navigationBar.barTintColor = UIColor.init(red: 196.0/155.0, green: 26.0/155.0, blue: 22.0/155.0, alpha: 1.0)
+                present(navController, animated: true, completion: nil)
+            }
+        }
+        
     }
-    
 }
 
 
@@ -166,7 +188,7 @@ extension MovieListViewController {
                 continue
             }
             
-            let url: URL? = self.appDelegate?.imageConfiguration?.urlFor(imagePath: posterImagePath!, withImageCategory: ImageCategory.poster(.original))
+            let url: URL? = self.appDelegate?.imageConfiguration?.urlFor(imagePath: posterImagePath!, withImageCategory: ImageCategory.poster(.w780))
             
             if let url = url {
                 

@@ -32,7 +32,7 @@ class MovieListPosterImageOperation: Operation {
         
         do {
             let imageData: Data = try Data(contentsOf: self.url)
-            self.movieListViewModel.posterImage = UIImage(data: imageData)
+            self.movieListViewModel.update(posterImage: UIImage(data: imageData))
             
             DispatchQueue.main.async {
                 self.completionHandler?(self.identifier, nil)

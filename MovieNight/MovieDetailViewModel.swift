@@ -37,7 +37,7 @@ extension MovieDetailViewModel {
     }
     
     var overviewAttribute: TextWithAttribute {
-        return TextWithAttribute(text: movie.overview, font: UIFont.systemFont(ofSize: 18.0), color: UIColor.black)
+        return TextWithAttribute(text: movie.overview, font: UIFont.systemFont(ofSize: 17.0), color: UIColor.black)
     }
     
     var averageRatingAttribute: TextWithAttribute {

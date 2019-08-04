@@ -93,12 +93,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.77000000000000002" green="0.10199999999999999" blue="0.085999999999999993" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <color key="textShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <color key="textShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -109,6 +109,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DDe-90-KT2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="134.78260869565219" y="708.48214285714278"/>
+        </scene>
+        <!--Image View Controller-->
+        <scene sceneID="wqH-Ys-u1o">
+            <objects>
+                <viewController storyboardIdentifier="ImgViewController" id="1JJ-yP-io6" customClass="ImageViewController" customModule="MovieNight" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="v5s-US-oju">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Wh-ph-2Cg">
+                                <rect key="frame" x="0.0" y="44" width="414" height="808"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="4Wh-ph-2Cg" firstAttribute="leading" secondItem="VIV-iq-IZM" secondAttribute="leading" id="MKw-dP-TMI"/>
+                            <constraint firstItem="4Wh-ph-2Cg" firstAttribute="top" secondItem="VIV-iq-IZM" secondAttribute="top" id="Tmq-hd-P2W"/>
+                            <constraint firstItem="4Wh-ph-2Cg" firstAttribute="trailing" secondItem="VIV-iq-IZM" secondAttribute="trailing" id="xjV-gF-XCb"/>
+                            <constraint firstItem="4Wh-ph-2Cg" firstAttribute="centerY" secondItem="v5s-US-oju" secondAttribute="centerY" id="z6b-qM-duX"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="VIV-iq-IZM"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="4Wh-ph-2Cg" id="ERo-h5-7Pk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="njX-Z9-4Yv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <resources>
