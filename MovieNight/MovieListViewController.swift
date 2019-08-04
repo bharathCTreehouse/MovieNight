@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class MovieListViewController: MovieNightViewController {
+class MovieListViewController: MovieCriteriaViewController {
     
     var tableView: TextWithSubtTitleTableView? = nil
     let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
@@ -55,11 +55,16 @@ class MovieListViewController: MovieNightViewController {
         super.viewDidLoad()
         
         self.title = "Movie list"
-
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped(_:)))
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
-
         fetchMoviesBasedOnSelectedCriteria()
+    }
+    
+    
+    override var rightNavigationBarButtonItemConfig: BarButtonType? {
+        return BarButtonType.system(.done, titleColor: .white, target: self, action: #selector(rightBarButtonTapped(_:)))
+    }
+    
+    override var leftNavigationBarButtonItemConfig: BarButtonType? {
+        return nil
     }
     
     
@@ -105,17 +110,6 @@ extension MovieListViewController: TextWithSubTitleTableViewActionResponder {
         
     }
 }
-
-
-
-extension MovieListViewController {
-    
-    @objc func doneButtonTapped(_ sender: UIBarButtonItem) {
-        self.movieCriteria.reset()
-        dismiss(animated: true, completion: nil)
-    }
-}
-
 
 
 extension MovieListViewController {
@@ -206,6 +200,17 @@ extension MovieListViewController {
 
     }
     
+}
+
+
+extension MovieListViewController {
+    
+    @objc override func rightBarButtonTapped(_ sender: UIBarButtonItem) {
+        
+        movieCriteria.reset()
+        dismiss(animated: true, completion: nil)
+    }
+   
 }
 
 

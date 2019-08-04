@@ -10,12 +10,11 @@ import Foundation
 import UIKit
 
 
-class GenreSelectionViewController: MovieNightViewController {
+class GenreSelectionViewController: MovieCriteriaViewController {
     
     var tableView: MultipleOptionSelectionTableView? = nil
     let allGenres: [Genre]
     var allGenreViewModels: [MultipleOptionSelectionDisplayable] = []
-    
     
     
     init(withGenres genres: [Genre], movieCriteria: MovieCriteria) {
@@ -29,7 +28,6 @@ class GenreSelectionViewController: MovieNightViewController {
         allGenres = []
         super.init(coder: aDecoder)
     }
-    
     
     
     override func loadView() {
@@ -56,16 +54,8 @@ class GenreSelectionViewController: MovieNightViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
         self.title = "Select genres"
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextButtonTapped(_:)))
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonTapped(_:)))
-         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
     }
-    
     
     
     func prepareData() {
@@ -73,21 +63,28 @@ class GenreSelectionViewController: MovieNightViewController {
     }
     
     
-    
-    @objc func backButtonTapped(_ sender: UIBarButtonItem) {
-        self.movieCriteria.removeAllGenres()
-        self.movieCriteria.changeSelectionStatus(to: .unInitiated)
-        navigationController?.popViewController(animated: true)
-    }
-    
-    
-    @objc func nextButtonTapped(_ sender: UIBarButtonItem) {
-        tableView?.fetchAllSelectedObjects()
-    }
-    
-    
     deinit {
         tableView = nil
     }
     
+}
+
+
+
+extension GenreSelectionViewController {
+    
+    @objc override func rightBarButtonTapped(_ sender: UIBarButtonItem) {
+        
+        tableView?.fetchAllSelectedObjects()
+
+    }
+    
+    
+    @objc override func leftBarButtonTapped(_ sender: UIBarButtonItem) {
+        
+        self.movieCriteria.removeAllGenres()
+        self.movieCriteria.changeSelectionStatus(to: .unInitiated)
+        super.leftBarButtonTapped(sender)
+        
+    }
 }

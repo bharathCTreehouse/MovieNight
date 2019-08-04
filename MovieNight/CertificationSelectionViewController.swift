@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CertificationSelectionViewController: MovieNightViewController {
+class CertificationSelectionViewController: MovieCriteriaViewController {
     
     var countryView: SingleLabelDisplayView? = nil
     var certificationDescriptionView: SingleLabelDisplayView? = nil
@@ -45,18 +45,6 @@ class CertificationSelectionViewController: MovieNightViewController {
             
         }
     }
-    
-    
-    
-    override init(withMovieCriteria criteria: MovieCriteria) {
-        super.init(withMovieCriteria: criteria)
-    }
-    
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
     
     
     override func loadView() {
@@ -116,36 +104,8 @@ class CertificationSelectionViewController: MovieNightViewController {
         
         super.viewDidLoad()
         fetchCertifications()
-
-        
         self.title = "Select certification"
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextButtonTapped(_:)))
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonTapped(_:)))
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
     }
-    
-    
-    @objc func backButtonTapped(_ sender: UIBarButtonItem) {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    
-    @objc func nextButtonTapped(_ sender: UIButton) {
-        
-        self.movieCriteria.changeSelectionStatus(to: .completed)
-        let rowSelected: Int = self.certificationPickerView!.selectedRow(inComponent: 0)
-        if rowSelected != NSNotFound && rowSelected < currentlyDisplayedList.count {
-            let certification: Certification = self.currentlyDisplayedList[rowSelected]
-            if certification.order > 0 {
-                self.movieCriteria.addCertification(certification)
-            }
-        }
-        self.navigationController?.popToRootViewController(animated: true)
-    }
-    
     
     
    deinit {
@@ -216,5 +176,25 @@ extension CertificationSelectionViewController {
         })
     }
     
+}
+
+
+
+extension CertificationSelectionViewController {
+    
+    
+    @objc override func rightBarButtonTapped(_ sender: UIBarButtonItem) {
+        
+        movieCriteria.changeSelectionStatus(to: .completed)
+        let rowSelected: Int = certificationPickerView!.selectedRow(inComponent: 0)
+        if rowSelected != NSNotFound && rowSelected < currentlyDisplayedList.count {
+            let certification: Certification = currentlyDisplayedList[rowSelected]
+            if certification.order > 0 {
+                movieCriteria.addCertification(certification)
+            }
+        }
+        navigationController?.popToRootViewController(animated: true)
+        
+    }
 }
 

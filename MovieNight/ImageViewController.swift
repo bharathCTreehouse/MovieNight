@@ -24,8 +24,9 @@ class ImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped(_:)))
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
+       let rightBarType: BarButtonType = BarButtonType.system(.done, titleColor: .white, target: self, action: #selector(doneButtonTapped(_:)))
+
+    navigationItem.setupRightNavigationBarButtonItem(usingConfigData: rightBarType)
         
         imageView.image = imageToDisplay
 

@@ -86,6 +86,8 @@ class ViewController: UIViewController {
                     self.movieCriteria.changeSelectionStatus(to: .inProgress)
                     let genreVC: GenreSelectionViewController = GenreSelectionViewController(withGenres: allGenres, movieCriteria: self.movieCriteria)
                     self.navigationController?.pushViewController(genreVC, animated: true)
+                    
+                    
                 }
             }
         })

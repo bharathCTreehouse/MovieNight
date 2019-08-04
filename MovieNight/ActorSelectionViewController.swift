@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 
-class ActorSelectionViewController: MovieNightViewController {
+class ActorSelectionViewController: MovieCriteriaViewController {
     
     var searchBar: UISearchBar? = nil
     var tableView: MultipleOptionSelectionTableView? = nil
@@ -94,14 +94,7 @@ class ActorSelectionViewController: MovieNightViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.title = "Select actors"
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextButtonTapped(_:)))
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonTapped(_:)))
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
     }
     
     
@@ -124,23 +117,6 @@ class ActorSelectionViewController: MovieNightViewController {
         })
         
     }
-    
-    
-    
-    @objc func backButtonTapped(_ sender: UIBarButtonItem) {
-        self.movieCriteria.removeAllActors()
-        navigationController?.popViewController(animated: true)
-    }
-    
-    
-    @objc func nextButtonTapped(_ sender: UIBarButtonItem) {
-        
-        tableView?.fetchAllSelectedObjects()
-        
-        let certiSelectionVC: CertificationSelectionViewController = CertificationSelectionViewController(withMovieCriteria: self.movieCriteria)
-        self.navigationController?.pushViewController(certiSelectionVC, animated: true)
-    }
-    
     
     
     deinit {
@@ -232,6 +208,27 @@ extension ActorSelectionViewController {
         }
         
     }
+}
+
+
+extension ActorSelectionViewController {
+    
+    @objc override func rightBarButtonTapped(_ sender: UIBarButtonItem) {
+        
+        tableView?.fetchAllSelectedObjects()
+        
+        let certiSelectionVC: CertificationSelectionViewController = CertificationSelectionViewController(withMovieCriteria: self.movieCriteria)
+        navigationController?.pushViewController(certiSelectionVC, animated: true)
+        
+    }
+    
+    
+    @objc override func leftBarButtonTapped(_ sender: UIBarButtonItem) {
+        
+        movieCriteria.removeAllActors()
+        super.leftBarButtonTapped(sender)
+    }
+    
 }
 
 

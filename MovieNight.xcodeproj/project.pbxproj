@@ -44,9 +44,10 @@
 		8E82405622C4911100A64B7B /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E82405522C4911100A64B7B /* Endpoint.swift */; };
 		8E82405822C4973800A64B7B /* Certification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E82405722C4973800A64B7B /* Certification.swift */; };
 		8E82405B22C53EDE00A64B7B /* ArrayUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E82405A22C53EDE00A64B7B /* ArrayUtilities.swift */; };
+		8EAA4A0922F6F7AE0082EFEA /* UINavigationItemUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAA4A0822F6F7AE0082EFEA /* UINavigationItemUtilities.swift */; };
 		8ECBC1BB22CF1AA50031B594 /* MovieCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECBC1BA22CF1AA50031B594 /* MovieCriteria.swift */; };
 		8ECBC1BD22CF1C200031B594 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECBC1BC22CF1C200031B594 /* Actor.swift */; };
-		8ECBC1BF22CF1D5E0031B594 /* MovieNightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECBC1BE22CF1D5E0031B594 /* MovieNightViewController.swift */; };
+		8ECBC1BF22CF1D5E0031B594 /* MovieCriteriaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECBC1BE22CF1D5E0031B594 /* MovieCriteriaViewController.swift */; };
 		8ECBC1C122CF31D90031B594 /* ActorSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECBC1C022CF31D90031B594 /* ActorSelectionViewController.swift */; };
 		8ECBC1C322CFCDDC0031B594 /* AccessorySwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECBC1C222CFCDDC0031B594 /* AccessorySwitchView.swift */; };
 		8ED7668A22CDC0110077AF57 /* SelectionAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7668922CDC0110077AF57 /* SelectionAttribute.swift */; };
@@ -105,9 +106,10 @@
 		8E82405522C4911100A64B7B /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		8E82405722C4973800A64B7B /* Certification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Certification.swift; sourceTree = "<group>"; };
 		8E82405A22C53EDE00A64B7B /* ArrayUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayUtilities.swift; sourceTree = "<group>"; };
+		8EAA4A0822F6F7AE0082EFEA /* UINavigationItemUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationItemUtilities.swift; sourceTree = "<group>"; };
 		8ECBC1BA22CF1AA50031B594 /* MovieCriteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCriteria.swift; sourceTree = "<group>"; };
 		8ECBC1BC22CF1C200031B594 /* Actor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
-		8ECBC1BE22CF1D5E0031B594 /* MovieNightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNightViewController.swift; sourceTree = "<group>"; };
+		8ECBC1BE22CF1D5E0031B594 /* MovieCriteriaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCriteriaViewController.swift; sourceTree = "<group>"; };
 		8ECBC1C022CF31D90031B594 /* ActorSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorSelectionViewController.swift; sourceTree = "<group>"; };
 		8ECBC1C222CFCDDC0031B594 /* AccessorySwitchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessorySwitchView.swift; sourceTree = "<group>"; };
 		8ED7668922CDC0110077AF57 /* SelectionAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionAttribute.swift; sourceTree = "<group>"; };
@@ -189,7 +191,7 @@
 				8ED7668B22CDC4080077AF57 /* GenreSelectionViewController.swift */,
 				8ECBC1BA22CF1AA50031B594 /* MovieCriteria.swift */,
 				8ECBC1BC22CF1C200031B594 /* Actor.swift */,
-				8ECBC1BE22CF1D5E0031B594 /* MovieNightViewController.swift */,
+				8ECBC1BE22CF1D5E0031B594 /* MovieCriteriaViewController.swift */,
 				8ECBC1C022CF31D90031B594 /* ActorSelectionViewController.swift */,
 				8ECBC1C222CFCDDC0031B594 /* AccessorySwitchView.swift */,
 				8E43D37B22D3BBDA00BBE3D5 /* TableViewSectionInfo.swift */,
@@ -220,6 +222,7 @@
 				8E09F7D422F4AE28005E7D68 /* MovieDetailTableView.swift */,
 				8E21377822F5B47300C005DB /* ButtonAttribute.swift */,
 				8E21377A22F61F2B00C005DB /* ImageViewController.swift */,
+				8EAA4A0822F6F7AE0082EFEA /* UINavigationItemUtilities.swift */,
 			);
 			path = MovieNight;
 			sourceTree = "<group>";
@@ -347,10 +350,11 @@
 				4C5D2E8D22ED3B8000DD4451 /* TextWithSubtTitleTableView.swift in Sources */,
 				8E21881C22CB2667004947F8 /* TextWithAttribute.swift in Sources */,
 				8E21377922F5B47300C005DB /* ButtonAttribute.swift in Sources */,
+				8EAA4A0922F6F7AE0082EFEA /* UINavigationItemUtilities.swift in Sources */,
 				8E82405622C4911100A64B7B /* Endpoint.swift in Sources */,
 				8E1C03DA22F16D2C007FC2DE /* MovieDetailViewModel.swift in Sources */,
 				4C5D2E8B22ED3AD100DD4451 /* TextWithSubtTitleTableViewDataSource.swift in Sources */,
-				8ECBC1BF22CF1D5E0031B594 /* MovieNightViewController.swift in Sources */,
+				8ECBC1BF22CF1D5E0031B594 /* MovieCriteriaViewController.swift in Sources */,
 				8ECBC1BD22CF1C200031B594 /* Actor.swift in Sources */,
 				8EDB614522EA252B00F4ECFC /* StringUtilities.swift in Sources */,
 				8E82405B22C53EDE00A64B7B /* ArrayUtilities.swift in Sources */,

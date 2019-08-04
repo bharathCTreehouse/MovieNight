@@ -54,8 +54,9 @@ class MovieDetailViewController: UIViewController {
         
         self.title = "Movie detail"
 
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backButtonTapped(_:)))
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+        let leftBarType: BarButtonType = BarButtonType.custom(withTitle: "Back", titleColor: .white, style: .plain, target: self, action: #selector(backButtonTapped(_:)))
+    navigationItem.setupLeftNavigationBarButtonItem(usingConfigData: leftBarType)
+        
         fetchBackdopImage()
     }
     
