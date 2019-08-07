@@ -15,7 +15,7 @@ enum Endpoint: URLCreator {
     case fetchPopularActors
     case fetchActor(name: String)
     case fetchCertifications
-    case fetchMovie(genres: CollectionQueryItemConfigurer, actors: CollectionQueryItemConfigurer?, certification: Certification?)
+    case fetchMovie(genres: CollectionQueryItemConfigurer?, actors: CollectionQueryItemConfigurer?, certification: Certification?, pageToFetch: Int?)
     case fetchImageConfiguration
     
     var path: String {
@@ -36,20 +36,25 @@ enum Endpoint: URLCreator {
         
         switch self {
             
-            case let .fetchActor(name: actorName): items.append(URLQueryItem(name: "query", value: actorName))
+        case let .fetchActor(name: actorName): items.append(URLQueryItem(name: "query", value: actorName))
             
-            case let .fetchMovie(genres: genreConfigurer, actors: actorConfigurer, certification: certi):
-                
+        case let .fetchMovie(genres: genreConfigurer, actors: actorConfigurer, certification: certi, pageToFetch: page):
+            
+            if let genreConfigurer = genreConfigurer {
                 items.append(URLQueryItem(name: "with_genres", value: genreConfigurer.combinedParameterString))
-                if let actorConfigurer = actorConfigurer {
-                    items.append(URLQueryItem(name: "with_cast", value: actorConfigurer.combinedParameterString))
-                }
-                if let certi = certi {
-                    items.append(URLQueryItem(name: "certification_country", value: certi.country))
-                    items.append(URLQueryItem(name: "certification", value: certi.name))
-                }
+            }
+            if let actorConfigurer = actorConfigurer {
+                items.append(URLQueryItem(name: "with_cast", value: actorConfigurer.combinedParameterString))
+            }
+            if let certi = certi {
+                items.append(URLQueryItem(name: "certification_country", value: certi.country))
+                items.append(URLQueryItem(name: "certification", value: certi.name))
+            }
+            if let page = page {
+                items.append(URLQueryItem(name: "page", value: String(page)))
+            }
             
-            default: break
+        default: break
         }
         
         return items

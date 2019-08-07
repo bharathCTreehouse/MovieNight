@@ -14,6 +14,8 @@ class MovieListViewController: MovieCriteriaViewController {
     
     var tableView: TextWithSubtTitleTableView? = nil
     let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+    var footerView: ButtonWithActivityIndicatorHeaderFooterView? = nil
+    var paginatedApiHandler: PaginatedMovieAPIHandler?
     
     var movies: NSOrderedSet = [] {
         didSet {
@@ -23,6 +25,7 @@ class MovieListViewController: MovieCriteriaViewController {
     }
     var moviesListViewModels: [MovieListViewModel] = [] {
         didSet {
+            
             //Update the table view here.
             tableView?.update(withData: moviesListViewModels)
             
@@ -41,7 +44,7 @@ class MovieListViewController: MovieCriteriaViewController {
         self.view = UIView()
         self.view.backgroundColor = UIColor.white
         
-        tableView = TextWithSubtTitleTableView(withData: moviesListViewModels, tableViewActionResponder: self)
+        tableView = TextWithSubtTitleTableView(withData: moviesListViewModels, tableViewActionResponder: self, headerFooterDataSource: self)
         view.addSubview(tableView!)
         tableView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
@@ -53,9 +56,8 @@ class MovieListViewController: MovieCriteriaViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
         self.title = "Movie list"
-        fetchMoviesBasedOnSelectedCriteria()
+        configurePaginatedApiHandler()
     }
     
     
@@ -70,9 +72,39 @@ class MovieListViewController: MovieCriteriaViewController {
     
     deinit {
         tableView = nil
+        footerView = nil
     }
     
 }
+
+
+extension MovieListViewController: TableViewHeaderAndFooterProvider {
+    
+    
+    var tableViewFooter: UIView? {
+        
+        if let paginatedApiHandler = paginatedApiHandler {
+            
+            if paginatedApiHandler.apiDataActive == nil {
+                return nil
+            }
+        }
+        else {
+            return nil
+        }
+       
+        if footerView == nil {
+            
+            footerView = ButtonWithActivityIndicatorHeaderFooterView(withFrame: CGRect.init(x: 0.0, y: 0.0, width: UIScreen.main.bounds.size.width, height: 75.0), displayState: .notLoading(buttonTitle: "Load more"), buttonTapHandler: { [unowned self] () -> Void in
+                
+                self.footerView?.update(displayState: .loading)
+                self.paginatedApiHandler?.triggerAPIRequest()
+            })
+        }
+        return footerView
+    }
+}
+
 
 extension MovieListViewController: TextWithSubTitleTableViewActionResponder {
     
@@ -114,9 +146,11 @@ extension MovieListViewController: TextWithSubTitleTableViewActionResponder {
 
 extension MovieListViewController {
     
-    func fetchMoviesBasedOnSelectedCriteria() {
+    
+    func paginatedApiData() -> [PaginatedMovieAPIData] {
         
         let allParameterTypes: [QueryParameterType] = QueryParameterType.allParameterTypes
+        var list : [PaginatedMovieAPIData] = []
         
         for parameterType in allParameterTypes {
             
@@ -130,39 +164,52 @@ extension MovieListViewController {
             if let certifications = self.movieCriteria.certifications {
                 
                 for certification in certifications {
-                    fetchMovies(forGenreConfig: genreConfigurer, actorConfig: actorConfigurer, certification: certification)
+                    
+                    let paginatedApiData = PaginatedMovieAPIData(withGenreConfig: genreConfigurer, actorConfig: actorConfigurer, certification: certification, pageToFetch: 0, maxPageLimit: nil)
+                    
+                    list.append(paginatedApiData)
                 }
             }
             else {
-                fetchMovies(forGenreConfig: genreConfigurer, actorConfig: actorConfigurer, certification: nil)
+                let paginatedApiData = PaginatedMovieAPIData(withGenreConfig: genreConfigurer, actorConfig: actorConfigurer, certification: nil, pageToFetch: 0, maxPageLimit: nil)
+                
+                list.append(paginatedApiData)
+                
             }
             
         }
+        return list
     }
     
     
-    func fetchMovies(forGenreConfig genreConfig: CollectionQueryItemConfigurer, actorConfig: CollectionQueryItemConfigurer?, certification: Certification?) {
+    func configurePaginatedApiHandler() {
         
-        
-        let movieNightAPI: MovieNightAPI = MovieNightAPI()
-        
-        movieNightAPI.fetchMovies(withEndPoint: Endpoint.fetchMovie(genres: genreConfig, actors: actorConfig, certification: certification), completionHandler: { (movies: [Movie]?, error: Error?) -> Void in
+        paginatedApiHandler = PaginatedMovieAPIHandler(withPaginatedMovieApiList: paginatedApiData(), responseHandler: { [unowned self] (movies: [Movie]?, error: Error?, allDataFetched: Bool) -> Void in
             
-            if let error = error {
-                print("Error: \(error)")
-            }
-            else {
-                if let movies = movies {
-                    
-                    print("Movies: \(movies)")
-                    
-                    let existingSet: NSMutableOrderedSet = NSMutableOrderedSet.init(orderedSet: self.movies)
-                    existingSet.addObjects(from: movies)
-                    self.movies = existingSet
-                    
-                }
-            }
+            self.footerView?.update(displayState: .notLoading(buttonTitle: "Load more"))
+            self.handleMovieListResponse(containing: movies, error: error, allDataFetched: allDataFetched)
+            
         })
+    }
+    
+    
+    func handleMovieListResponse(containing movies: [Movie]?, error: Error?, allDataFetched: Bool) {
+        
+        if let error = error {
+            print("Error: \(error)")
+        }
+        else {
+            if let movies = movies {
+                
+                print("Movies: \(movies)")
+                
+                let existingSet: NSMutableOrderedSet = NSMutableOrderedSet.init(orderedSet: self.movies)
+                existingSet.addObjects(from: movies)
+                self.movies = existingSet
+                
+            }
+        }
+        
     }
 }
 

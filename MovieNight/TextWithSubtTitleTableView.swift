@@ -20,11 +20,13 @@ class TextWithSubtTitleTableView: UITableView {
     
     var dataSourceForTableView: TextWithSubtTitleTableViewDataSource? = nil
     weak private(set) var tableViewActionResponder: TextWithSubTitleTableViewActionResponder? = nil
+    weak var headerFooterDataSource: TableViewHeaderAndFooterProvider? = nil
     
     
-    init(withData data: [TextWithSubtTitleDisplayable], tableViewActionResponder responder: TextWithSubTitleTableViewActionResponder?) {
+    init(withData data: [TextWithSubtTitleDisplayable], tableViewActionResponder responder: TextWithSubTitleTableViewActionResponder?, headerFooterDataSource: TableViewHeaderAndFooterProvider?) {
         
         tableViewActionResponder = responder
+        self.headerFooterDataSource = headerFooterDataSource
         super.init(frame: .zero, style: .plain)
         translatesAutoresizingMaskIntoConstraints = false
         dataSourceForTableView = TextWithSubtTitleTableViewDataSource(withData: data, accessoryActionHandler: { [unowned self] (idxPath: IndexPath) -> Void in
@@ -38,6 +40,8 @@ class TextWithSubtTitleTableView: UITableView {
         delegate = dataSourceForTableView
         estimatedRowHeight = 60.0
         rowHeight = 94.0
+        reloadTableHeaderView()
+        reloadTableFooterView()
     }
     
     
@@ -49,6 +53,18 @@ class TextWithSubtTitleTableView: UITableView {
     func update(withData data: [TextWithSubtTitleDisplayable]) {
         dataSourceForTableView?.update(withData: data)
         reloadData()
+        reloadTableHeaderView()
+        reloadTableFooterView()
+    }
+    
+    
+    func reloadTableFooterView() {
+        self.tableFooterView = self.headerFooterDataSource?.tableViewFooter
+    }
+    
+    
+    func reloadTableHeaderView() {
+        self.tableHeaderView = self.headerFooterDataSource?.tableViewHeader
     }
     
     

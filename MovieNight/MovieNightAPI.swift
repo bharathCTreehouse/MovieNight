@@ -110,23 +110,23 @@ class MovieNightAPI {
     
     
     
-    func fetchMovies(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Movie]?, Error?) -> ()) {
+    func fetchMovies(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Movie]?, Error?, Int?, Int?) -> ()) {
         
         
         fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
             
             if let error = error {
-                handler(nil, error)
+                handler(nil, error, nil, nil)
             }
             else {
                 if let data = data {
                     let jsonDecoder: JSONDecoder = JSONDecoder()
                     jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                     let movieList: MovieResultList = try! jsonDecoder.decode(MovieResultList.self, from: data)
-                    handler(movieList.results, nil)
+                    handler(movieList.results, nil, movieList.page, movieList.totalPages)
                 }
                 else {
-                    handler(nil, error)
+                    handler(nil, error, nil, nil)
                 }
             }
         })
