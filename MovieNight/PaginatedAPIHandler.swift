@@ -11,11 +11,7 @@ import Foundation
 
 class PaginatedAPIHandler {
     
-    private(set) var allPaginatedData: [PaginatedAPIData] = [] {
-        didSet {
-            triggerAPIRequest()
-        }
-    }
+    private(set) var allPaginatedData: [PaginatedAPIData] = []
     var apiDataActive: PaginatedAPIData? = nil
     
     

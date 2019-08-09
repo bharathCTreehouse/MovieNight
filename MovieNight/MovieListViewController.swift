@@ -15,30 +15,25 @@ class MovieListViewController: MovieCriteriaViewController {
     var tableView: TextWithSubtTitleTableView? = nil
     let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
     var footerView: ButtonWithActivityIndicatorHeaderFooterView? = nil
-    var paginatedApiHandler: PaginatedMovieAPIHandler?
-    
+    var currentMovieListCount: Int = 0
+
+    var paginatedApiHandler: PaginatedMovieAPIHandler? {
+        didSet {
+            paginatedApiHandler?.triggerAPIRequest()
+        }
+    }
     var movies: NSOrderedSet = [] {
         didSet {
-            //Create view model for each movie object.
-            self.moviesListViewModels = movies.compactMap({ return MovieListViewModel(withMovie: $0 as! Movie)})
+            respondToMovieListUpdate()
         }
     }
     var moviesListViewModels: [MovieListViewModel] = [] {
         didSet {
-            
-            //Update the table view here.
-            tableView?.update(withData: moviesListViewModels)
-            
-            //Start fetching movie poster images.
-            //Find all view models without images.
-            let viewModelsWithoutImages: [MovieListViewModel] = moviesListViewModels.filter({ return $0.posterImage == nil})
-            fetchPosterImages(for: viewModelsWithoutImages)
-            
+            respondToMovieListViewModelUpdate()
         }
     }
     
-    
-    
+   
     override func loadView() {
         
         self.view = UIView()
@@ -78,8 +73,42 @@ class MovieListViewController: MovieCriteriaViewController {
 }
 
 
-extension MovieListViewController: TableViewHeaderAndFooterProvider {
+extension MovieListViewController {
     
+    func respondToMovieListUpdate() {
+        
+        //Create view model for each movie object.
+        
+        if currentMovieListCount > 0 {
+            //Movie objects already present. So create view models only for the newly added movies.
+            let movieSubset = movies.dropFirst(currentMovieListCount)
+            moviesListViewModels.append(contentsOf: movieSubset.compactMap({ return MovieListViewModel(withMovie: $0 as! Movie)}))
+        }
+        else {
+            moviesListViewModels = movies.compactMap({ return MovieListViewModel(withMovie: $0 as! Movie)})
+        }
+    }
+    
+    
+    func respondToMovieListViewModelUpdate() {
+        
+        //Update the table view here.
+        tableView?.update(withData: moviesListViewModels)
+        
+        //Start fetching movie poster images.
+        if currentMovieListCount > 0 {
+            let viewModelSubset = Array(moviesListViewModels.dropFirst(currentMovieListCount))
+            fetchPosterImages(for: viewModelSubset)
+            
+        }
+        else {
+            fetchPosterImages(for: moviesListViewModels)
+        }
+    }
+}
+
+
+extension MovieListViewController: TableViewHeaderAndFooterProvider {
     
     var tableViewFooter: UIView? {
         
@@ -119,9 +148,11 @@ extension MovieListViewController: TextWithSubTitleTableViewActionResponder {
     
     func showMovieDetail(atIndex index: Int) {
         
-        let selectedMovie: Movie = movies[index] as! Movie
-        let movieDetailVC: MovieDetailViewController = MovieDetailViewController(withMovie: selectedMovie)
-        navigationController?.pushViewController(movieDetailVC, animated: true)
+        let selectedMovie: Movie? = movies[index] as? Movie
+        if let selectedMovie = selectedMovie {
+            let movieDetailVC: MovieDetailViewController = MovieDetailViewController(withMovie: selectedMovie)
+            navigationController?.pushViewController(movieDetailVC, animated: true)
+        }
     }
     
     
@@ -145,7 +176,6 @@ extension MovieListViewController: TextWithSubTitleTableViewActionResponder {
 
 
 extension MovieListViewController {
-    
     
     func paginatedApiData() -> [PaginatedMovieAPIData] {
         
@@ -186,6 +216,7 @@ extension MovieListViewController {
         
         paginatedApiHandler = PaginatedMovieAPIHandler(withPaginatedMovieApiList: paginatedApiData(), responseHandler: { [unowned self] (movies: [Movie]?, error: Error?, allDataFetched: Bool) -> Void in
             
+            self.currentMovieListCount = self.movies.count
             self.footerView?.update(displayState: .notLoading(buttonTitle: "Load more"))
             self.handleMovieListResponse(containing: movies, error: error, allDataFetched: allDataFetched)
             
@@ -217,13 +248,13 @@ extension MovieListViewController {
 
 extension MovieListViewController {
     
-    
     func fetchPosterImages(for viewModels: [MovieListViewModel]) {
         
         let imageOperationQueue: OperationQueue = OperationQueue.init()
         
-        for (index,viewModel) in viewModels.enumerated() {
+        for (_,viewModel) in viewModels.enumerated() {
             
+            let mainIndex: Int? = moviesListViewModels.firstIndex(of: viewModel)
             let posterImagePath: String? = viewModel.movie.posterPath
             if posterImagePath == nil {
                 continue
@@ -233,7 +264,7 @@ extension MovieListViewController {
             
             if let url = url {
                 
-                let imageOperation: MovieListPosterImageOperation = MovieListPosterImageOperation(withURL: url, identifier: index, movieListViewModel: viewModel, completionHandler: { [unowned self] (index: Int?, error: Error?) -> Void in
+                let imageOperation: MovieListPosterImageOperation = MovieListPosterImageOperation(withURL: url, identifier: mainIndex, movieListViewModel: viewModel, completionHandler: { [unowned self] (index: Int?, error: Error?) -> Void in
                     
                     if error == nil && index != nil {
                         self.tableView?.reloadRows(at: [IndexPath.init(row: index!, section: 0)], with: .automatic)
