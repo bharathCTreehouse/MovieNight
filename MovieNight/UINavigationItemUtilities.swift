@@ -10,6 +10,12 @@ import Foundation
 import UIKit
 
 
+enum UINavigationItemTitleType {
+    case title(String?)
+    case view(UIView?)
+}
+
+
 extension UINavigationItem {
     
     func setupRightNavigationBarButtonItem(usingConfigData configData: BarButtonType?) {
@@ -59,6 +65,17 @@ extension UINavigationItem {
                 self.leftBarButtonItem?.tintColor = color
                 
             }
+        }
+    }
+    
+    
+    func configureTitle(forType type: UINavigationItemTitleType) {
+        
+        switch type {
+            case .title(let titleString): self.title = titleString
+                                          self.titleView = nil
+            
+            case .view(let titleView): self.titleView = titleView
         }
     }
 }

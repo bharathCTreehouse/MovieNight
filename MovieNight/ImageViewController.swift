@@ -24,16 +24,15 @@ class ImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       let rightBarType: BarButtonType = BarButtonType.system(.done, titleColor: .white, target: self, action: #selector(doneButtonTapped(_:)))
-
-    navigationItem.setupRightNavigationBarButtonItem(usingConfigData: rightBarType)
+        let rightBarType: BarButtonType = BarButtonType.custom(withTitle: "Close", titleColor: .white, style: .done, target: self, action: #selector(closeButtonTapped(_:)))
+        navigationItem.setupRightNavigationBarButtonItem(usingConfigData: rightBarType)
         
         imageView.image = imageToDisplay
-
+        
     }
     
     
-    @objc func doneButtonTapped(_ sender: UIBarButtonItem) {
+    @objc func closeButtonTapped(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     

@@ -54,12 +54,17 @@ class GenreSelectionViewController: MovieCriteriaViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        self.title = "Select genres"
+        activateNavigationItemTitle()
     }
     
     
     func prepareData() {
         allGenreViewModels = allGenres.compactMap({ return GenreListViewModel(withGenre: $0)} )
+    }
+    
+    
+    override var titleString: String? {
+        return "Select genres"
     }
     
     

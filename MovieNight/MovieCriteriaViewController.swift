@@ -22,7 +22,13 @@ protocol MovieCriteriaNavigationItemConfigurer {
 }
 
 
-class MovieCriteriaViewController: UIViewController, MovieCriteriaNavigationItemConfigurer {
+protocol MovieCriteriaNavigationItemTitleConfigurer {
+    var titleString: String? { get }
+    var navigationTitleView: UIView? { get }
+}
+
+
+class MovieCriteriaViewController: UIViewController, MovieCriteriaNavigationItemConfigurer, MovieCriteriaNavigationItemTitleConfigurer {
     
     var movieCriteria: MovieCriteria
     
@@ -33,6 +39,17 @@ class MovieCriteriaViewController: UIViewController, MovieCriteriaNavigationItem
     
     var leftNavigationBarButtonItemConfig: BarButtonType? {
         return BarButtonType.custom(withTitle: "Back", titleColor: UIColor.white, style: .plain, target: self, action: #selector(leftBarButtonTapped(_:)))
+    }
+    
+    
+    var titleString: String? {
+        return nil
+    }
+    
+    var navigationTitleView: UIView? {
+        let activityView: UIActivityIndicatorView = UIActivityIndicatorView(style: .white)
+        activityView.startAnimating()
+        return activityView
     }
     
     
@@ -75,5 +92,18 @@ extension MovieCriteriaViewController {
     
     @objc func leftBarButtonTapped(_ sender: UIBarButtonItem) {
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+
+
+extension MovieCriteriaViewController {
+    
+    func activateNavigationItemTitle() {
+        navigationItem.configureTitle(forType: .title(titleString))
+    }
+    
+    func activateNavigationItemTitleView() {
+        navigationItem.configureTitle(forType: .view(navigationTitleView))
     }
 }

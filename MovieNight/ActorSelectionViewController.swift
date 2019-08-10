@@ -49,19 +49,6 @@ class ActorSelectionViewController: MovieCriteriaViewController {
     let popularSectionInfo: TableViewSectionDetail = TableViewSectionDetail(withHeader: TableViewSection.header(.title("Popular actors")), footer: nil, identifier: 1)
     
     
-    
-    override init(withMovieCriteria criteria: MovieCriteria) {
-        super.init(withMovieCriteria: criteria)
-        fetchAllPopularActors()
-    }
-    
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    
-    
     override func loadView() {
         
         self.view = UIView()
@@ -94,16 +81,20 @@ class ActorSelectionViewController: MovieCriteriaViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Select actors"
+        fetchAllPopularActors()
     }
     
     
     
     func fetchAllPopularActors() {
         
+        activateNavigationItemTitleView()
+        
         let movieNightClient: MovieNightAPI = MovieNightAPI()
         
         movieNightClient.fetchActors(withEndPoint: Endpoint.fetchPopularActors, completionHandler: { [unowned self] (actors: [Actor]?, error: Error?) -> Void in
+            
+            self.activateNavigationItemTitle()
             
             if let error = error {
                 print("Error: \(error)")
@@ -116,6 +107,11 @@ class ActorSelectionViewController: MovieCriteriaViewController {
             
         })
         
+    }
+    
+    
+    override var titleString: String? {
+        return "Select actors"
     }
     
     
@@ -143,9 +139,13 @@ extension ActorSelectionViewController: UISearchBarDelegate {
     
     func searchActor(withName name: String) {
         
+        activateNavigationItemTitleView()
+        
         let movieNightClient: MovieNightAPI = MovieNightAPI()
         
         movieNightClient.fetchActors(withEndPoint: Endpoint.fetchActor(name: name), completionHandler: { [unowned self] (actors: [Actor]?, error: Error?) -> Void in
+            
+            self.activateNavigationItemTitle()
             
             if let error = error {
                 print("Error: \(error)")

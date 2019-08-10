@@ -8,23 +8,20 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: MovieCriteriaViewController {
     
     @IBOutlet weak var backgroundMovieImageView: UIImageView!
     @IBOutlet weak var firstPersonCriteriaSelectionButton: UIButton!
     @IBOutlet weak var secondPersonCriteriaSelectionButton: UIButton!
     @IBOutlet weak var viewResultsButton: UIButton!
 
-    let movieCriteria: MovieCriteria = MovieCriteria(withGenres: [], actors: nil, certifications: nil)
-    
-    
-    
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         backgroundMovieImageView.sizeToFit()
+        movieCriteria = MovieCriteria(withGenres: [], actors: nil, certifications: nil)
     }
-    
     
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,23 +49,33 @@ class ViewController: UIViewController {
         viewResultsButton.changeEnabledState(to: enabled, alphaChangeStatus: (enabled == true) ? AlphaChangeNeeded.yes(1.0) : AlphaChangeNeeded.yes(0.3))
     }
     
+    override var rightNavigationBarButtonItemConfig: BarButtonType? {
+        return nil
+    }
+    
+    override var leftNavigationBarButtonItemConfig: BarButtonType? {
+        return nil
+    }
+    
     
     
     @IBAction func firstPersonCriteriaSelectionButtonTapped(sender: UIButton) {
+        
+        activateNavigationItemTitleView()
         self.movieCriteria.updateCurrentPerson(with: .first)
         moveToNextCriteriaSelectionScreen()
     }
     
     
     @IBAction func secondPersonCriteriaSelectionButtonTapped(sender: UIButton) {
+        
+        activateNavigationItemTitleView()
         self.movieCriteria.updateCurrentPerson(with: .second)
         moveToNextCriteriaSelectionScreen()
     }
     
     
-    
     func moveToNextCriteriaSelectionScreen() {
-        
         
         let appDelegate: AppDelegate? =  UIApplication.shared.delegate as? AppDelegate
         
@@ -77,6 +84,8 @@ class ViewController: UIViewController {
         }
         
         MovieNightAPI().fetchAllGenres(withEndPoint: Endpoint.fetchGenre, completionHandler: { [unowned self] (allGenres: [Genre]?, error: Error?) -> () in
+            
+            self.activateNavigationItemTitle()
             
             if let error = error {
                 print("ERROR: \(error)")

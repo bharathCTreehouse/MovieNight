@@ -104,7 +104,11 @@ class CertificationSelectionViewController: MovieCriteriaViewController {
         
         super.viewDidLoad()
         fetchCertifications()
-        self.title = "Select certification"
+    }
+    
+    
+    override var titleString: String? {
+        return "Select certification"
     }
     
     
@@ -155,7 +159,11 @@ extension CertificationSelectionViewController {
     
     func fetchCertifications() {
         
-        MovieNightAPI().fetchAllCertifications(withEndPoint: Endpoint.fetchCertifications, completionHandler: { (certifications: [String: [Certification]]?, error: Error?) -> Void in
+        activateNavigationItemTitleView()
+        
+        MovieNightAPI().fetchAllCertifications(withEndPoint: Endpoint.fetchCertifications, completionHandler: { [unowned self] (certifications: [String: [Certification]]?, error: Error?) -> Void in
+            
+            self.activateNavigationItemTitle()
             
             if let error = error {
                 print("Error: \(error)")
@@ -168,6 +176,7 @@ extension CertificationSelectionViewController {
                     //By default, display certifications for India.
                     let list: [Certification]? = certifications[CountryCodeMapper.Country.India.countryCode]
                     if var list = list {
+                        //Inserting the "None" option.
                         list.insert(Certification(withCountry: list.first!.country), at: 0)
                         self.currentlyDisplayedList = list
                     }

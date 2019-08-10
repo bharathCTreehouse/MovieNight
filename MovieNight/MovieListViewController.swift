@@ -19,6 +19,7 @@ class MovieListViewController: MovieCriteriaViewController {
 
     var paginatedApiHandler: PaginatedMovieAPIHandler? {
         didSet {
+            activateNavigationItemTitleView()
             paginatedApiHandler?.triggerAPIRequest()
         }
     }
@@ -51,7 +52,6 @@ class MovieListViewController: MovieCriteriaViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        self.title = "Movie list"
         configurePaginatedApiHandler()
     }
     
@@ -62,6 +62,11 @@ class MovieListViewController: MovieCriteriaViewController {
     
     override var leftNavigationBarButtonItemConfig: BarButtonType? {
         return nil
+    }
+    
+    
+    override var titleString: String? {
+        return "Movie list"
     }
     
     
@@ -216,6 +221,7 @@ extension MovieListViewController {
         
         paginatedApiHandler = PaginatedMovieAPIHandler(withPaginatedMovieApiList: paginatedApiData(), responseHandler: { [unowned self] (movies: [Movie]?, error: Error?, allDataFetched: Bool) -> Void in
             
+            self.activateNavigationItemTitle()
             self.currentMovieListCount = self.movies.count
             self.footerView?.update(displayState: .notLoading(buttonTitle: "Load more"))
             self.handleMovieListResponse(containing: movies, error: error, allDataFetched: allDataFetched)
