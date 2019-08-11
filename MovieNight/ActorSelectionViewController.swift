@@ -15,6 +15,9 @@ class ActorSelectionViewController: MovieCriteriaViewController {
     var searchBar: UISearchBar? = nil
     var tableView: MultipleOptionSelectionTableView? = nil
     let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
+    var popularActorFetchDataTask: URLSessionDataTask? = nil
+    var searchActorFetchDataTask: URLSessionDataTask? = nil
+    let imageQueue: OperationQueue = OperationQueue.init()
 
 
     var popularActorsViewModel: [MultipleOptionSelectionDisplayable] = [] {
@@ -92,12 +95,14 @@ class ActorSelectionViewController: MovieCriteriaViewController {
         
         let movieNightClient: MovieNightAPI = MovieNightAPI()
         
-        movieNightClient.fetchActors(withEndPoint: Endpoint.fetchPopularActors, completionHandler: { [unowned self] (actors: [Actor]?, error: Error?) -> Void in
+        popularActorFetchDataTask =  movieNightClient.fetchActors(withEndPoint: Endpoint.fetchPopularActors, completionHandler: { [unowned self] (actors: [Actor]?, error: Error?) -> Void in
             
             self.activateNavigationItemTitle()
             
             if let error = error {
-                print("Error: \(error)")
+                if error.representsTaskCancellation == false {
+                    self.showAlertController(withTitle: "Alert", message: error.localizedDescription, actionTitles: ["OK"])
+                }
             }
             else {
                 if let actors = actors {
@@ -118,6 +123,8 @@ class ActorSelectionViewController: MovieCriteriaViewController {
     deinit {
         tableView = nil
         searchBar = nil
+        popularActorFetchDataTask = nil
+        searchActorFetchDataTask = nil
     }
     
 }
@@ -143,12 +150,14 @@ extension ActorSelectionViewController: UISearchBarDelegate {
         
         let movieNightClient: MovieNightAPI = MovieNightAPI()
         
-        movieNightClient.fetchActors(withEndPoint: Endpoint.fetchActor(name: name), completionHandler: { [unowned self] (actors: [Actor]?, error: Error?) -> Void in
+        searchActorFetchDataTask = movieNightClient.fetchActors(withEndPoint: Endpoint.fetchActor(name: name), completionHandler: { [unowned self] (actors: [Actor]?, error: Error?) -> Void in
             
             self.activateNavigationItemTitle()
             
             if let error = error {
-                print("Error: \(error)")
+                if error.representsTaskCancellation == false {
+                    self.showAlertController(withTitle: "Alert", message: error.localizedDescription, actionTitles: ["OK"])
+                }
             }
             else {
                 if let actors = actors {
@@ -175,9 +184,6 @@ extension ActorSelectionViewController {
             section = 0
         }
         
-        let imageQueue: OperationQueue = OperationQueue.init()
-        
-        
         for (index, data) in list.enumerated() {
             
             let viewModel: ActorListViewModel? = data as? ActorListViewModel
@@ -191,7 +197,6 @@ extension ActorSelectionViewController {
             if imageURL == nil {
                 continue
             }
-            
             
             let imageOperation: ActorListImageOperation =  ActorListImageOperation(withActorListViewModel: viewModel!, uniqueIdentifier: index, url: imageURL!, actorFetchType: fetchType, completionHandler: { (identifier: Int?, fetchType: ActorFetchType, error: Error?) -> Void in
                 
@@ -225,6 +230,9 @@ extension ActorSelectionViewController {
     
     @objc override func leftBarButtonTapped(_ sender: UIBarButtonItem) {
         
+        popularActorFetchDataTask?.cancel()
+        searchActorFetchDataTask?.cancel()
+        imageQueue.cancelAllOperations()
         movieCriteria.removeAllActors()
         super.leftBarButtonTapped(sender)
     }

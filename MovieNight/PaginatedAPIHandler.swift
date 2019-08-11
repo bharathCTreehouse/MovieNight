@@ -13,8 +13,8 @@ class PaginatedAPIHandler {
     
     private(set) var allPaginatedData: [PaginatedAPIData] = []
     var apiDataActive: PaginatedAPIData? = nil
-    
-    
+    var allDataTasks: [URLSessionDataTask] = []
+
     init(withPaginatedDataList list: [PaginatedAPIData]) {
         apiDataActive = list.first
         updatePaginatedData(withList: list)
@@ -41,6 +41,13 @@ class PaginatedAPIHandler {
     
     func triggerAPIRequest() {
         //Sub classes to override and make respective API requests.
+    }
+    
+    
+    func cancelAllPaginatedTasks() {
+        allDataTasks.forEach({ $0.cancel()})
+        allDataTasks.removeAll()
+        allPaginatedData.removeAll()
     }
     
     

@@ -14,5 +14,12 @@ enum MovieNightAPIError: Swift.Error {
     case invalidResponse
     case invalidData
     
+}
+
+
+extension Error {
     
+    var representsTaskCancellation: Bool {
+        return (self as NSError).code == NSURLErrorCancelled
+    }
 }

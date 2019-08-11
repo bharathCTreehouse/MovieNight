@@ -11,10 +11,10 @@ import Foundation
 
 class MovieNightAPI {
     
-    func fetchAllGenres(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Genre]?, Error?) -> ()) {
+    @discardableResult func fetchAllGenres(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Genre]?, Error?) -> ()) -> URLSessionDataTask? {
         
         
-        fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
+        let dataTask: URLSessionDataTask? = fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
             
             if let error = error {
                 handler(nil, error)
@@ -31,16 +31,17 @@ class MovieNightAPI {
             }
         })
         
+        return dataTask
+        
         
     }
     
     
     
-    
-    func fetchActors(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Actor]?, Error?) -> ()) {
+    @discardableResult func fetchActors(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Actor]?, Error?) -> ()) -> URLSessionDataTask? {
         
         
-        fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
+        let dataTask: URLSessionDataTask? = fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
             
             if let error = error {
                 handler(nil, error)
@@ -57,15 +58,15 @@ class MovieNightAPI {
             }
         })
         
-        
+        return dataTask
     }
     
     
     
-    func fetchImageConfiguration(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping (ImageConfiguration?, Error?) -> ()) {
+    @discardableResult func fetchImageConfiguration(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping (ImageConfiguration?, Error?) -> ()) -> URLSessionDataTask? {
         
         
-        fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
+        let dataTask: URLSessionDataTask? = fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
             
             if let error = error {
                 handler(nil, error)
@@ -83,14 +84,16 @@ class MovieNightAPI {
             }
         })
         
+        return dataTask
+        
     }
     
     
     
-    func fetchAllCertifications(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([String: [Certification]]?, Error?) -> ()) {
+    @discardableResult func fetchAllCertifications(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([String: [Certification]]?, Error?) -> ()) -> URLSessionDataTask? {
         
         
-        fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
+        let dataTask: URLSessionDataTask? = fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
             
             if let error = error {
                 handler(nil, error)
@@ -106,14 +109,16 @@ class MovieNightAPI {
                 }
             }
         })
+        
+        return dataTask
     }
     
     
     
-    func fetchMovies(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Movie]?, Error?, Int?, Int?) -> ()) {
+    @discardableResult func fetchMovies(withEndPoint endPoint: URLCreator, completionHandler handler: @escaping ([Movie]?, Error?, Int?, Int?) -> ()) -> URLSessionDataTask? {
         
         
-        fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
+        let dataTask: URLSessionDataTask? = fetchData(forUrlRequest: endPoint.request, completionHandler: { (data: Data?, error: Error?) -> () in
             
             if let error = error {
                 handler(nil, error, nil, nil)
@@ -131,15 +136,16 @@ class MovieNightAPI {
             }
         })
         
+        return dataTask
     }
     
     
     
-    func fetchData(atUrl url: URL, completionHandler handler: @escaping (Data?, Error?) -> ()) {
+    @discardableResult func fetchData(atUrl url: URL, completionHandler handler: @escaping (Data?, Error?) -> ()) -> URLSessionDataTask? {
         
         let urlRequest: URLRequest? = URLRequest(url: url)
         
-        fetchData(forUrlRequest: urlRequest, completionHandler: { (data: Data?, error: Error?) -> Void in
+        let dataTask: URLSessionDataTask? = fetchData(forUrlRequest: urlRequest, completionHandler: { (data: Data?, error: Error?) -> Void in
             
             if let error = error {
                 handler(nil, error)
@@ -154,19 +160,21 @@ class MovieNightAPI {
             }
             
         })
+        
+        return dataTask
     }
-    
 }
 
 
 extension MovieNightAPI {
     
     
-    private func fetchData(forUrlRequest urlRequest: URLRequest?, completionHandler handler: @escaping (Data?, Error?) -> ()) {
+    @discardableResult private func fetchData(forUrlRequest urlRequest: URLRequest?, completionHandler handler: @escaping (Data?, Error?) -> ()) -> URLSessionDataTask? {
         
         
         if urlRequest == nil {
             handler(nil, MovieNightAPIError.invalidRequest)
+            return nil
         }
         else {
             
@@ -208,6 +216,8 @@ extension MovieNightAPI {
             })
             
             task.resume()
+            return task
+            
             
         }
         

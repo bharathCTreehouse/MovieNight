@@ -16,6 +16,8 @@ class MovieListViewController: MovieCriteriaViewController {
     let appDelegate: AppDelegate? = UIApplication.shared.delegate as? AppDelegate
     var footerView: ButtonWithActivityIndicatorHeaderFooterView? = nil
     var currentMovieListCount: Int = 0
+    var movieFetchDataTask: URLSessionDataTask? = nil
+    let imageOperationQueue: OperationQueue = OperationQueue.init()
 
     var paginatedApiHandler: PaginatedMovieAPIHandler? {
         didSet {
@@ -233,7 +235,11 @@ extension MovieListViewController {
     func handleMovieListResponse(containing movies: [Movie]?, error: Error?, allDataFetched: Bool) {
         
         if let error = error {
-            print("Error: \(error)")
+            
+            if error.representsTaskCancellation == false {
+                showAlertController(withTitle: "Alert", message: error.localizedDescription, actionTitles: ["OK"])
+            }
+            
         }
         else {
             if let movies = movies {
@@ -255,8 +261,6 @@ extension MovieListViewController {
 extension MovieListViewController {
     
     func fetchPosterImages(for viewModels: [MovieListViewModel]) {
-        
-        let imageOperationQueue: OperationQueue = OperationQueue.init()
         
         for (_,viewModel) in viewModels.enumerated() {
             
@@ -291,6 +295,8 @@ extension MovieListViewController {
     
     @objc override func rightBarButtonTapped(_ sender: UIBarButtonItem) {
         
+        paginatedApiHandler?.cancelAllPaginatedTasks()
+        imageOperationQueue.cancelAllOperations()
         movieCriteria.reset()
         dismiss(animated: true, completion: nil)
     }

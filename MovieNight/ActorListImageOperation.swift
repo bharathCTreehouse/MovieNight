@@ -41,16 +41,27 @@ class ActorListImageOperation: Operation {
     override func main() {
         
         do {
+            if self.isCancelled == true {
+                return
+            }
             let data: Data = try Data(contentsOf: imageURL)
             let image: UIImage? = UIImage(data: data)
             self.actorListViewModel.profileImage = image
             
             DispatchQueue.main.async {  () -> Void in
+                
+                if self.isCancelled == true {
+                    return
+                }
                 self.completionHandler(self.identifier, self.fetchType, nil)
             }
         }
         catch let fetchError {
             DispatchQueue.main.async {  () -> Void in
+                
+                if self.isCancelled == true {
+                    return
+                }
                 self.completionHandler(self.identifier, self.fetchType, fetchError)
             }
         }

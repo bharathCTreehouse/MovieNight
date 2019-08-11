@@ -16,6 +16,7 @@ class MovieDetailViewController: UIViewController {
     var moviedetailViewModel: MovieDetailViewModel? = nil
     var movieBackdropView: MovieBackdropView? = nil
     var movieDetailTableView: MovieDetailTableView? = nil
+    var posterImageFetchDataTask: URLSessionDataTask? = nil
     
     
     init(withMovie movie: Movie) {
@@ -62,6 +63,7 @@ class MovieDetailViewController: UIViewController {
     
     
     @objc func backButtonTapped(_ sender: UIBarButtonItem) {
+        posterImageFetchDataTask?.cancel()
         navigationController?.popViewController(animated: true)
     }
     
@@ -70,6 +72,7 @@ class MovieDetailViewController: UIViewController {
         moviedetailViewModel = nil
         movieBackdropView = nil
         movieDetailTableView = nil
+        posterImageFetchDataTask = nil
     }
 }
 
@@ -90,14 +93,22 @@ extension MovieDetailViewController {
         }
         
         let apiClient: MovieNightAPI = MovieNightAPI()
-        apiClient.fetchData(atUrl: url, completionHandler: { [unowned self] (imageData: Data?, error: Error?) -> Void in
+        posterImageFetchDataTask = apiClient.fetchData(atUrl: url, completionHandler: { [unowned self] (imageData: Data?, error: Error?) -> Void in
             
-            if let data = imageData, let image = UIImage(data: data) {
+            if let error = error {
                 
-                self.movieBackdropView?.updateBackdropView(withType: .image(image))
+                if error.representsTaskCancellation == false {
+                    MovieNightAlertViewController.displayAlertController(onViewController: self, withTitle: "Alert", message: error.localizedDescription, actionTitles: ["OK"], buttonActionCompletion: nil)
+                }
             }
             else {
-                self.movieBackdropView?.updateBackdropView(withType: .noImagePresent)
+                if let data = imageData, let image = UIImage(data: data) {
+                    
+                    self.movieBackdropView?.updateBackdropView(withType: .image(image))
+                }
+                else {
+                    self.movieBackdropView?.updateBackdropView(withType: .noImagePresent)
+                }
             }
             
         })

@@ -80,11 +80,15 @@ class MovieCriteriaViewController: UIViewController, MovieCriteriaNavigationItem
     func setupLeftNavigationBarButtonItem() {
     navigationItem.setupLeftNavigationBarButtonItem(usingConfigData: leftNavigationBarButtonItemConfig)
     }
+    
+    
+    func alertActionTapped(atIndex indexOfAlertAction: Int?) {
+        //Subclasses to override and perform customized work on alert action tap.
+    }
 }
 
 
 extension MovieCriteriaViewController {
-    
     
     @objc func rightBarButtonTapped(_ sender: UIBarButtonItem) {
         //Subclasses will override and push the next view controller accordingly.
@@ -105,5 +109,18 @@ extension MovieCriteriaViewController {
     
     func activateNavigationItemTitleView() {
         navigationItem.configureTitle(forType: .view(navigationTitleView))
+    }
+}
+
+
+extension MovieCriteriaViewController {
+    
+    func showAlertController(withTitle title: String?, message: String?, actionTitles: [String]) {
+        
+        MovieNightAlertViewController.displayAlertController(onViewController: self, withTitle: title, message: message, actionTitles: actionTitles, buttonActionCompletion: { [unowned self] (actionIndex: Int?) -> Void in
+            
+                self.alertActionTapped(atIndex: actionIndex)
+        })
+        
     }
 }

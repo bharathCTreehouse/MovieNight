@@ -15,12 +15,12 @@ class CertificationSelectionViewController: MovieCriteriaViewController {
     var certificationPickerView: BasicSelectionPickerView? = nil
     var countryChangeButton: UIButton? = nil
     var allCertificationData: [String: [Certification]] = [:]
+    var certificationDataTask: URLSessionDataTask? = nil
     
     var currentlyDisplayedList: [Certification] = [] {
         
         didSet {
             
-
             let names: [String] = currentlyDisplayedList.compactMap({ return $0.name })
             certificationPickerView!.update(withData: [0: names])
             
@@ -28,11 +28,11 @@ class CertificationSelectionViewController: MovieCriteriaViewController {
                 
                 //Update country
                 let countryViewModel: CertificationListViewModel = CertificationListViewModel(withCertification: currentlyDisplayedList.first!, attributeType: .country)
-                self.countryView!.update(withData: countryViewModel)
+                countryView!.update(withData: countryViewModel)
                 
                 //Update meaning
                 let meaningViewModel: CertificationListViewModel = CertificationListViewModel(withCertification: currentlyDisplayedList.first!, attributeType: .meaning)
-                self.certificationDescriptionView!.update(withData: meaningViewModel)
+                certificationDescriptionView!.update(withData: meaningViewModel)
             }
             else {
                 self.countryView!.update(withData: nil)
@@ -161,12 +161,14 @@ extension CertificationSelectionViewController {
         
         activateNavigationItemTitleView()
         
-        MovieNightAPI().fetchAllCertifications(withEndPoint: Endpoint.fetchCertifications, completionHandler: { [unowned self] (certifications: [String: [Certification]]?, error: Error?) -> Void in
+        certificationDataTask = MovieNightAPI().fetchAllCertifications(withEndPoint: Endpoint.fetchCertifications, completionHandler: { [unowned self] (certifications: [String: [Certification]]?, error: Error?) -> Void in
             
             self.activateNavigationItemTitle()
             
             if let error = error {
-                print("Error: \(error)")
+                if error.representsTaskCancellation == false {
+                    self.showAlertController(withTitle: "Alert", message: error.localizedDescription, actionTitles: ["OK"])
+                }
             }
             else {
                 if let certifications = certifications {
@@ -204,6 +206,13 @@ extension CertificationSelectionViewController {
         }
         navigationController?.popToRootViewController(animated: true)
         
+    }
+    
+    
+    @objc override func leftBarButtonTapped(_ sender: UIBarButtonItem) {
+        
+        certificationDataTask?.cancel()
+        super.leftBarButtonTapped(sender)
     }
 }
 

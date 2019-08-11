@@ -16,6 +16,7 @@ class ViewController: MovieCriteriaViewController {
     @IBOutlet weak var viewResultsButton: UIButton!
 
     
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -62,7 +63,7 @@ class ViewController: MovieCriteriaViewController {
     @IBAction func firstPersonCriteriaSelectionButtonTapped(sender: UIButton) {
         
         activateNavigationItemTitleView()
-        self.movieCriteria.updateCurrentPerson(with: .first)
+        movieCriteria.updateCurrentPerson(with: .first)
         moveToNextCriteriaSelectionScreen()
     }
     
@@ -70,7 +71,7 @@ class ViewController: MovieCriteriaViewController {
     @IBAction func secondPersonCriteriaSelectionButtonTapped(sender: UIButton) {
         
         activateNavigationItemTitleView()
-        self.movieCriteria.updateCurrentPerson(with: .second)
+        movieCriteria.updateCurrentPerson(with: .second)
         moveToNextCriteriaSelectionScreen()
     }
     
@@ -88,15 +89,15 @@ class ViewController: MovieCriteriaViewController {
             self.activateNavigationItemTitle()
             
             if let error = error {
-                print("ERROR: \(error)")
+                if error.representsTaskCancellation == false {
+                    self.showAlertController(withTitle: "Alert", message: error.localizedDescription, actionTitles: ["OK"])
+                }
             }
             else {
-                if let allGenres =  allGenres {
+                if let allGenres = allGenres {
                     self.movieCriteria.changeSelectionStatus(to: .inProgress)
                     let genreVC: GenreSelectionViewController = GenreSelectionViewController(withGenres: allGenres, movieCriteria: self.movieCriteria)
                     self.navigationController?.pushViewController(genreVC, animated: true)
-                    
-                    
                 }
             }
         })
@@ -111,19 +112,14 @@ class ViewController: MovieCriteriaViewController {
         
         movieAPI.fetchImageConfiguration(withEndPoint: Endpoint.fetchImageConfiguration, completionHandler: { (imgConfig: ImageConfiguration?, error: Error?) -> Void in
             
-            if let error = error {
-                print("Error: \(error)")
-            }
-            else {
+            if error == nil {
                 let appDelegate: AppDelegate? =  UIApplication.shared.delegate as? AppDelegate
                 appDelegate?.imageConfiguration = imgConfig
             }
-            
         })
     }
     
-    
-    
+  
     deinit {
         backgroundMovieImageView = nil
         firstPersonCriteriaSelectionButton = nil
@@ -145,7 +141,6 @@ extension ViewController {
         present(navController, animated: true, completion: nil)
         
     }
-    
 }
 
 

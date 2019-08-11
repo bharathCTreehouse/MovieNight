@@ -31,15 +31,24 @@ class MovieListPosterImageOperation: Operation {
     override func main() {
         
         do {
+            if isCancelled == true {
+                return
+            }
             let imageData: Data = try Data(contentsOf: self.url)
             self.movieListViewModel.update(posterImage: UIImage(data: imageData))
             
             DispatchQueue.main.async {
+                if self.isCancelled == true {
+                    return
+                }
                 self.completionHandler?(self.identifier, nil)
             }
         }
         catch let imageError {
             DispatchQueue.main.async {
+                if self.isCancelled == true {
+                    return
+                }
                 self.completionHandler?(self.identifier, imageError)
             }
         }

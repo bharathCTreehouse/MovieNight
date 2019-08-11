@@ -28,16 +28,17 @@ class PaginatedMovieAPIHandler: PaginatedAPIHandler {
         let movieApiData: PaginatedMovieAPIData? = apiDataActive as? PaginatedMovieAPIData
 
         if self.maxLimitReached == true ||  apiDataActive == nil || movieApiData == nil {
+            
+            allDataTasks.removeAll()
             responseHandler?([], nil, true)
             return
         }
         
         apiDataActive!.incrementPage()
         
-        movieAPI.fetchMovies(withEndPoint: Endpoint.fetchMovie(genres: movieApiData!.genreQueryConfig, actors: movieApiData!.actorQueryConfig, certification: movieApiData!.certification, pageToFetch: apiDataActive!.page), completionHandler: { [unowned self] (movies: [Movie]?, error: Error?, currentPage: Int?, totalPages: Int?) -> Void in
+        let dataTask: URLSessionDataTask? =  movieAPI.fetchMovies(withEndPoint: Endpoint.fetchMovie(genres: movieApiData!.genreQueryConfig, actors: movieApiData!.actorQueryConfig, certification: movieApiData!.certification, pageToFetch: apiDataActive!.page), completionHandler: { [unowned self] (movies: [Movie]?, error: Error?, currentPage: Int?, totalPages: Int?) -> Void in
             
             if let error = error {
-                print(error)
                 
                 //Decrement the page count since there was an error.
                 self.apiDataActive!.decrementPage()
@@ -61,7 +62,13 @@ class PaginatedMovieAPIHandler: PaginatedAPIHandler {
                     self.triggerAPIRequest()
                 }
             }
+            
         })
+        
+        if let dataTask = dataTask {
+            allDataTasks.append(dataTask)
+        }
+
     }
     
     
