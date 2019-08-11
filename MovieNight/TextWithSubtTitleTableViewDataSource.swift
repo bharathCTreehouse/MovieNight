@@ -53,9 +53,10 @@ class TextWithSubtTitleTableViewDataSource: NSObject, UITableViewDataSource {
         if cell == nil {
             cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cell")
         }
-        cell!.textLabel?.numberOfLines = 0
-        cell!.detailTextLabel?.numberOfLines = 0
-        
+        cell!.textLabel?.numberOfLines = 3
+        cell!.detailTextLabel?.numberOfLines = 2
+
+
         let currentData: TextWithSubtTitleDisplayable = data[indexPath.row]
         
         if let buttonAttr = currentData.moreInfoButtonAttribute {
