@@ -22,7 +22,7 @@ class CountryPickerAlertAction {
         completionHandler = handler
         identifierString = identifier
         
-        self.alertAction = UIAlertAction.init(title: title, style: style, handler: {  (action: UIAlertAction) -> Void in
+        self.alertAction = UIAlertAction.init(title: title, style: style, handler: { (action: UIAlertAction) -> Void in
             
             self.completionHandler(self.identifierString)
         })

@@ -23,7 +23,7 @@ class TextWithSubtTitleTableView: UITableView {
     weak var headerFooterDataSource: TableViewHeaderAndFooterProvider? = nil
     
     
-    init(withData data: [TextWithSubtTitleDisplayable], tableViewActionResponder responder: TextWithSubTitleTableViewActionResponder?, headerFooterDataSource: TableViewHeaderAndFooterProvider?) {
+    init(withData data: [TextWithSubtTitleDisplayable], tableViewActionResponder responder: TextWithSubTitleTableViewActionResponder?, headerFooterDataSource: TableViewHeaderAndFooterProvider?, rowHeight height: CGFloat = UITableView.automaticDimension) {
         
         tableViewActionResponder = responder
         self.headerFooterDataSource = headerFooterDataSource
@@ -39,7 +39,7 @@ class TextWithSubtTitleTableView: UITableView {
         dataSource = dataSourceForTableView
         delegate = dataSourceForTableView
         estimatedRowHeight = 60.0
-        rowHeight = 94.0
+        rowHeight = height
         reloadTableHeaderView()
         reloadTableFooterView()
     }

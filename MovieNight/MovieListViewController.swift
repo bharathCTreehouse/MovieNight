@@ -42,7 +42,7 @@ class MovieListViewController: MovieCriteriaViewController {
         self.view = UIView()
         self.view.backgroundColor = UIColor.white
         
-        tableView = TextWithSubtTitleTableView(withData: moviesListViewModels, tableViewActionResponder: self, headerFooterDataSource: self)
+        tableView = TextWithSubtTitleTableView(withData: moviesListViewModels, tableViewActionResponder: self, headerFooterDataSource: self, rowHeight: 94.0)
         view.addSubview(tableView!)
         tableView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true

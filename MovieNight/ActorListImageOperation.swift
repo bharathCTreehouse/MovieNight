@@ -37,7 +37,7 @@ class ActorListImageOperation: Operation {
         completionHandler = handler
     }
     
-    
+   
     override func main() {
         
         do {

@@ -22,14 +22,6 @@ enum TableViewSectionDisplay {
 }
 
 
-/*struct TableViewSectionInfo: Hashable {
-    
-    let title: String
-    let ID: Int
-    
-}*/
-
-
 class TableViewSectionIdentifier: Hashable {
     
     let ID: Int
