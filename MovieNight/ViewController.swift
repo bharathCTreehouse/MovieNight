@@ -21,7 +21,7 @@ class ViewController: MovieCriteriaViewController {
         
         super.viewDidLoad()
         backgroundMovieImageView.sizeToFit()
-        movieCriteria = MovieCriteria(withGenres: [], actors: nil, certifications: nil)
+        movieCriteria = MovieCriteria(withGenres: nil, actors: nil, certifications: nil)
     }
     
     

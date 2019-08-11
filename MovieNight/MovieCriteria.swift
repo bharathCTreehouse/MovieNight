@@ -32,7 +32,7 @@ class MovieCriteria {
     
     typealias CriteriaCompletionCount = Int
     
-    private(set) var genres: Set<String>
+    private(set) var genres: Set<String>?
     private(set) var actors: Set<String>?
     private(set) var certifications: Set<Certification>?
     private(set) var criteriaSelectionStatus: MovieCriteriaSelectionStatus {
@@ -46,7 +46,7 @@ class MovieCriteria {
     private (set) var currentPerson: Person = .unknown
     
     
-    init(withGenres genres: Set<String>, actors: Set<String>?, certifications: Set<Certification>?, selectionStatus status: MovieCriteriaSelectionStatus = .unInitiated) {
+    init(withGenres genres: Set<String>?, actors: Set<String>?, certifications: Set<Certification>?, selectionStatus status: MovieCriteriaSelectionStatus = .unInitiated) {
         
         self.genres = genres
         self.actors = actors
@@ -56,22 +56,31 @@ class MovieCriteria {
     
     
     func addActors(withIDs actorsToBeAdded: [String]) {
-        if actors == nil {
-            actors = []
+        
+        if actorsToBeAdded.isEmpty == false {
+            if actors == nil {
+                actors = []
+            }
+            actors = actors!.union(actorsToBeAdded)
         }
-        actors = actors!.union(actorsToBeAdded)
     }
     func removeAllActors() {
-        actors?.removeAll()
+        actors = nil
     }
     
     
     
     func addGenres(withIDs genresToBeAdded: [String]) {
-        genres = genres.union(genresToBeAdded)
+        
+        if genresToBeAdded.isEmpty == false {
+            if genres == nil {
+                genres = []
+            }
+            genres = genres!.union(genresToBeAdded)
+        }
     }
     func removeAllGenres() {
-        genres.removeAll()
+        genres = nil
     }
     
     
@@ -82,7 +91,7 @@ class MovieCriteria {
         certifications!.insert(certification)
     }
     func removeAllCertifications() {
-        certifications?.removeAll()
+        certifications = nil
     }
     
     
@@ -100,6 +109,7 @@ class MovieCriteria {
     deinit {
         actors = nil
         certifications = nil
+        genres = nil
     }
     
 }
@@ -118,5 +128,21 @@ extension MovieCriteria {
     
     func updateCurrentPerson(with person: Person) {
         currentPerson = person
+    }
+    
+    
+    var multipleIterationsNeededToFetchAllMovies: Bool {
+        
+        if let genres = genres {
+            if genres.count > 1 {
+                return true
+            }
+        }
+        if let actors = actors {
+            if actors.count > 1 {
+                return true
+            }
+        }
+        return false
     }
 }

@@ -53,8 +53,26 @@ class PaginatedMovieAPIHandler: PaginatedAPIHandler {
                         self.triggerAPIRequest()
                     }
                     else {
-                        //Call the completion handler
-                        self.responseHandler?(movies, nil, false)
+                        if totalPages == currentPage {
+                            //We have now fetched data from all pages from the current request. So remove it from our tracker.
+                            self.removePaginatedData(atIndex: 0)
+                            
+                            //Post removal, check to see if we have any more paginatedData tasks to execute.
+                            if self.allPaginatedData.isEmpty == true {
+                                //We are done. Reset all data.
+                                self.apiDataActive = nil
+                                self.allDataTasks.removeAll()
+                                self.responseHandler?(movies, nil, true)
+                            }
+                            else {
+                                //We do have some more paginated data tasks to be executed.So call the handler and wait for user action.
+                                self.responseHandler?(movies, nil, false)
+                            }
+                        }
+                        else {
+                            //Call the completion handler
+                            self.responseHandler?(movies, nil, false)
+                        }
                     }
                 }
                 else {

@@ -188,10 +188,14 @@ extension MovieListViewController {
         
         let allParameterTypes: [QueryParameterType] = QueryParameterType.allParameterTypes
         var list : [PaginatedMovieAPIData] = []
+        let shouldIterateFully: Bool = movieCriteria.multipleIterationsNeededToFetchAllMovies
         
         for parameterType in allParameterTypes {
             
-            let genreConfigurer: CollectionQueryItemConfigurer = CollectionQueryItemConfigurer(parameters: self.movieCriteria.genres, parameterType: parameterType)
+            var genreConfigurer: CollectionQueryItemConfigurer? = nil
+            if let genres = self.movieCriteria.genres {
+                genreConfigurer = CollectionQueryItemConfigurer(parameters: genres, parameterType: parameterType)
+            }
             
             var actorConfigurer: CollectionQueryItemConfigurer? = nil
             if let actors = self.movieCriteria.actors {
@@ -205,6 +209,7 @@ extension MovieListViewController {
                     let paginatedApiData = PaginatedMovieAPIData(withGenreConfig: genreConfigurer, actorConfig: actorConfigurer, certification: certification, pageToFetch: 0, maxPageLimit: nil)
                     
                     list.append(paginatedApiData)
+                    
                 }
             }
             else {
@@ -212,6 +217,10 @@ extension MovieListViewController {
                 
                 list.append(paginatedApiData)
                 
+            }
+            
+            if shouldIterateFully == false {
+                break
             }
             
         }
